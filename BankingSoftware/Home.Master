@@ -1,0 +1,87 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Home.master.cs" Inherits="BankingSoftware.Home" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+</body>
+</html>
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Home.Master.cs" Inherits="BankingSoftware.Site1" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title></title>
+
+    <link href="bootstrap/bootstrap.min.css" rel="stylesheet" />
+
+    <asp:ContentPlaceHolder ID="ContentPlaceHolder2" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form2" runat="server">
+
+        <div>
+            <center>
+                <img height="150" src="imgs/banner.jpg" />
+            </center>
+        </div>
+        <div>
+            <nav class="navbar navbar-expand-lg navbar-light rounded ms-4 me-4" style="background-color: #e3f2fd">
+
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item active">
+                        <asp:LinkButton CssClass="nav-link"  runat="server">View Balance</asp:LinkButton>
+                    </li>
+                    <li class="nav-item active">
+                        <asp:LinkButton CssClass="nav-link"  runat="server" href="myCards.aspx">My Cards</asp:LinkButton>
+                    </li>
+                    <li class="nav-item active">
+                        <asp:LinkButton CssClass="nav-link"  runat="server">Money transfer</asp:LinkButton>
+                    </li>
+                    <li class="nav-item active">
+                        <asp:LinkButton CssClass="nav-link"  runat="server">Add Funds</asp:LinkButton>
+                    </li>
+                    <li class="nav-item active">
+                        <asp:LinkButton CssClass="nav-link"  runat="server">Apply for loan</asp:LinkButton>
+                    </li>
+                </ul>
+
+                 <ul class="navbar-nav">
+                      <li class="nav-item active">
+                        <asp:LinkButton CssClass="nav-link"  runat="server">Login</asp:LinkButton>
+                    </li>
+                    <li class="nav-item active">
+                        <asp:LinkButton CssClass="nav-link"  runat="server" href="signup.aspx">Sign up</asp:LinkButton>
+                    </li>
+                 </ul>
+
+            </nav>    
+        </div>        
+
+        <div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder3" runat="server">
+            </asp:ContentPlaceHolder> 
+        </div>
+
+        <footer class="container-fluid bg-info">
+            <div class="footer-copyright text-center py-3">&copy 2021 Copyright:
+                <a href="homepage.aspx"> BankSoftware</a>
+            </div>
+        </footer>
+
+    </form>
+</body>
+</html>
