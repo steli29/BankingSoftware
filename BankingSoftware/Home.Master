@@ -1,23 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Home.master.cs" Inherits="BankingSoftware.Home" %>
-
-<!DOCTYPE html>
-
-<html>
-<head runat="server">
-    <title></title>
-    <asp:ContentPlaceHolder ID="head" runat="server">
-    </asp:ContentPlaceHolder>
-</head>
-<body>
-    <form id="form1" runat="server">
-        <div>
-            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-            </asp:ContentPlaceHolder>
-        </div>
-    </form>
-</body>
-</html>
-<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Home.Master.cs" Inherits="BankingSoftware.Site1" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Home.Master.cs" Inherits="BankingSoftware.Home" %>
 
 <!DOCTYPE html>
 
@@ -27,7 +8,7 @@
 
     <link href="bootstrap/bootstrap.min.css" rel="stylesheet" />
 
-    <asp:ContentPlaceHolder ID="ContentPlaceHolder2" runat="server">
+    <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body>
@@ -72,7 +53,7 @@
         </div>        
 
         <div>
-            <asp:ContentPlaceHolder ID="ContentPlaceHolder3" runat="server">
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder> 
         </div>
 
