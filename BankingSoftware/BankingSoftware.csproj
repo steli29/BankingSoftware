@@ -71,6 +71,7 @@
     <Content Include="imgs\banner.jpg" />
     <Content Include="Web.config" />
     <Content Include="homepage.aspx" />
+    <Content Include="signup.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Home.Master.cs">
@@ -87,6 +88,13 @@
     </Compile>
     <Compile Include="homepage.aspx.designer.cs">
       <DependentUpon>homepage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="signup.aspx.cs">
+      <DependentUpon>signup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="signup.aspx.designer.cs">
+      <DependentUpon>signup.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
