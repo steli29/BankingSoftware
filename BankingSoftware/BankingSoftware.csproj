@@ -75,11 +75,8 @@
     <Content Include="signup.aspx" />
     <Content Include="myCards.aspx" />
     <Content Include="login.aspx" />
-<<<<<<< Updated upstream
     <Content Include="addfunds.aspx" />
-=======
     <Content Include="WebForm5.aspx" />
->>>>>>> Stashed changes
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Home.Master.cs">
@@ -118,21 +115,18 @@
     <Compile Include="login.aspx.designer.cs">
       <DependentUpon>login.aspx</DependentUpon>
     </Compile>
-<<<<<<< Updated upstream
     <Compile Include="addfunds.aspx.cs">
       <DependentUpon>addfunds.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="addfunds.aspx.designer.cs">
       <DependentUpon>addfunds.aspx</DependentUpon>
-=======
     <Compile Include="WebForm5.aspx.cs">
       <DependentUpon>WebForm5.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="WebForm5.aspx.designer.cs">
       <DependentUpon>WebForm5.aspx</DependentUpon>
->>>>>>> Stashed changes
     </Compile>
   </ItemGroup>
   <ItemGroup>
