@@ -11,7 +11,29 @@
     transform: translate(-50%, -50%);
 }
 
-#login {
+.login {
     background-color: black;
     width: 100%;
+}
+
+.small-text {
+    line-height: 75px;
+    font-weight: bold;
+    padding:25px;
+}
+.big-text{
+    font-weight: bolder;
+    padding: 25px;
+}
+.table-width{
+    width: 10px;
+}
+
+.table-div {
+    margin: auto;
+    width: 70%;
+}
+.buttons-pos{
+    position: relative;
+    left: 80%;
 }
