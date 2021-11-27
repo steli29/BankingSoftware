@@ -70,13 +70,13 @@
     <Content Include="customCss\StyleSheet1.css" />
     <Content Include="imgs\banner.jpg" />
     <Content Include="imgs\logo2.jpg" />
+    <Content Include="viewBalance.aspx" />
     <Content Include="Web.config" />
     <Content Include="homepage.aspx" />
     <Content Include="signup.aspx" />
     <Content Include="myCards.aspx" />
     <Content Include="login.aspx" />
     <Content Include="addfunds.aspx" />
-    <Content Include="WebForm5.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Home.Master.cs">
@@ -122,12 +122,12 @@
     <Compile Include="addfunds.aspx.designer.cs">
       <DependentUpon>addfunds.aspx</DependentUpon>
     </Compile>
-    <Compile Include="WebForm5.aspx.cs">
-      <DependentUpon>WebForm5.aspx</DependentUpon>
+    <Compile Include="viewBalance.aspx.cs">
+      <DependentUpon>viewBalance.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="WebForm5.aspx.designer.cs">
-      <DependentUpon>WebForm5.aspx</DependentUpon>
+    <Compile Include="viewBalance.aspx.designer.cs">
+      <DependentUpon>viewBalance.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
