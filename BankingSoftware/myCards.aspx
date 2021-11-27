@@ -3,6 +3,7 @@
     <link href="./customCss/cards.css" rel="stylesheet" type="text/css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+<div class="col-lg-2 col-md-2 col-xs-12 col-sm-6"> <button class="section2_btn btn22" type="button">Request new card</button> </div>
 <div class="wrapper">
     <div class="card">
         <div class="upper">
