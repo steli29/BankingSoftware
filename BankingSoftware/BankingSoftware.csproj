@@ -121,6 +121,7 @@
     </Compile>
     <Compile Include="addfunds.aspx.designer.cs">
       <DependentUpon>addfunds.aspx</DependentUpon>
+    </Compile>
     <Compile Include="WebForm5.aspx.cs">
       <DependentUpon>WebForm5.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
