@@ -1,15 +1,25 @@
-﻿
-.card-image {
-    width: 30px
+﻿@import url('https://fonts.googleapis.com/css2?family=Maven+Pro&display=swap');
+
+body {
+    font-family: 'Maven Pro', sans-serif
+}
+
+.wrapper {
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .card {
-    font-family: 'Maven Pro', sans-serif height 180px;
+    height: 180px;
     width: 350px;
     padding: 20px;
+    background-color: #fff;
     border-radius: 14px;
     position: relative;
     color: #fff;
+    background-image: url(https://i.imgur.com/5rm6bLu.jpg);
     z-index: 5;
     background-size: cover;
     opacity: 1;
@@ -59,3 +69,11 @@
 
     .upper h4 {
         font-size: 30px;
+        text-transform: uppercase
+    }
+
+.lower {
+    position: absolute;
+    bottom: 20px;
+    z-index: 1
+}
