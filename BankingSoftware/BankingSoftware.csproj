@@ -75,6 +75,7 @@
     <Content Include="signup.aspx" />
     <Content Include="myCards.aspx" />
     <Content Include="login.aspx" />
+    <Content Include="addfunds.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Home.Master.cs">
@@ -112,6 +113,13 @@
     </Compile>
     <Compile Include="login.aspx.designer.cs">
       <DependentUpon>login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="addfunds.aspx.cs">
+      <DependentUpon>addfunds.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="addfunds.aspx.designer.cs">
+      <DependentUpon>addfunds.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
