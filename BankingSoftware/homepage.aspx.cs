@@ -30,7 +30,7 @@ namespace BankingSoftware
 
             SqlCommand cmd = new SqlCommand("INSERT INTO test_tbl " +
                 " (test) values(@test)", con);
-            cmd.Parameters.AddWithValue("@test", TextBox1.Text.Trim());
+            cmd.Parameters.AddWithValue("@test",TextBox1.Text.Trim());
             cmd.ExecuteNonQuery();
             con.Close();
         }
