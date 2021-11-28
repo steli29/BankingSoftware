@@ -11,7 +11,7 @@ namespace BankingSoftware
 {
 
 
-    public partial class WebForm7
+    public partial class applyforloan
     {
 
         /// <summary>

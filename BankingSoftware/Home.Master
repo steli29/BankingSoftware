@@ -30,13 +30,13 @@
                         <asp:LinkButton CssClass="nav-link"  runat="server" href="myCards.aspx">My Cards</asp:LinkButton>
                     </li>
                     <li class="nav-item active">
-                        <asp:LinkButton CssClass="nav-link"  runat="server">Money transfer</asp:LinkButton>
+                        <asp:LinkButton CssClass="nav-link"  runat="server" href="MoneyTrans.aspx">Money transfer</asp:LinkButton>
                     </li>
                     <li class="nav-item active">
                         <asp:LinkButton CssClass="nav-link"  runat="server" href="addfunds.aspx">Add Funds</asp:LinkButton>
                     </li>
                     <li class="nav-item active">
-                        <asp:LinkButton CssClass="nav-link"  runat="server" href="loan.aspx">Apply for loan</asp:LinkButton>
+                        <asp:LinkButton CssClass="nav-link"  runat="server" href="applyforloan.aspx">Apply for loan</asp:LinkButton>
                     </li>
                 </ul>
 

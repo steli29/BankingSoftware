@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Home.Master" AutoEventWireup="true" CodeBehind="loan.aspx.cs" Inherits="BankingSoftware.WebForm7" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Home.Master" AutoEventWireup="true" CodeBehind="applyforloan.aspx.cs" Inherits="BankingSoftware.applyforloan" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -26,10 +26,10 @@
          <div class="form-group" >
           <asp:DropDownList ID="DropDownList1" CssClass="form-control" runat="server">
               <asp:ListItem Text="I'm looking For" Value="imlookingfor" />
-                            <asp:ListItem Text="Personal Loan" Value="PLoan" />
-                            <asp:ListItem Text="Car Loan" Value="CLoan" />
-                            <asp:ListItem Text="Home Loan" Value="HLoan" />
-                            <asp:ListItem Text="Education Loan" Value="ELoan" />
+                            <asp:ListItem Text="PersonalLoan" Value="PersonalLoan" />
+                            <asp:ListItem Text="CarLoan" Value="CarLoan" />
+                            <asp:ListItem Text="HomeLoan" Value="HomeLoan" />
+                            <asp:ListItem Text="EducationLoan" Value="EducationLoan" />
           
                         </asp:DropDownList>
              </div>
@@ -43,6 +43,6 @@
 
     <br>
 
-
+        </div>
    
 </asp:Content>
