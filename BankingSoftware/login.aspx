@@ -9,15 +9,15 @@
         <div class="row">
             <div class="col frame">
                 <div class="opacity-50">
-                    <img height="500" src="imgs/logo2.jpg" />
+                    <img height="400" src="imgs/logo2.jpg" />
                 </div>
                 <div class="centered font-monospace"><h1 style="color:black">WELCOME TO OUR WEBSITE</h1><br /><h4 style="color:black">Please log-in to access your balance information.<br /> You are a new user? Hurry up and create account!</h4></div>
             </div>
             <div class="col">
-                <h1 class="display-1 font-monospace">Sign in</h1>
-                <asp:TextBox CssClass="form-control col-2" Font-Size="X-Large" Width="500" Height="80" ID="TextBox1" Placeholder="Enter Username"  runat="server"></asp:TextBox><br />
-                <asp:TextBox CssClass="form-control col-2" Font-Size="X-Large" Width="500" Height="80" TextMode="Password" Placeholder="Enter Password" ID="TextBox2" runat="server"></asp:TextBox><br />
-                <asp:Button ID="Button1" class="btn btn-primary" Font-Bold Font-Size="Large" Width="300" Height="50" runat="server" Text="Sign In" /><br /><br>
+                <h1 class="font-monospace">Sign in</h1>
+                <asp:TextBox CssClass="form-control col-2" Font-Size="X-Large" ID="TextBox1" Placeholder="Enter Username"  runat="server"></asp:TextBox><br />
+                <asp:TextBox CssClass="form-control col-2" Font-Size="X-Large" TextMode="Password" Placeholder="Enter Password" ID="TextBox2" runat="server"></asp:TextBox><br />
+                <asp:Button ID="Button1" class="btn btn-primary" Font-Size="Large" runat="server" Text="Sign In" /><br /><br>
                 <asp:Button ID="Button2" class="btn btn-outline-warning" runat="server" Text="Forgot Password?" />
                 <asp:Button ID="Button3" class="btn btn-outline-danger" runat="server" Text="Create Account" />
             </div>

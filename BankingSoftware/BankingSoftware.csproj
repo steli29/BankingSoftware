@@ -77,7 +77,7 @@
     <Content Include="myCards.aspx" />
     <Content Include="login.aspx" />
     <Content Include="addfunds.aspx" />
-    <Content Include="WebForm7.aspx" />
+    <Content Include="loan.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Home.Master.cs">
@@ -130,12 +130,12 @@
     <Compile Include="viewBalance.aspx.designer.cs">
       <DependentUpon>viewBalance.aspx</DependentUpon>
     </Compile>
-    <Compile Include="WebForm7.aspx.cs">
-      <DependentUpon>WebForm7.aspx</DependentUpon>
+    <Compile Include="loan.aspx.cs">
+      <DependentUpon>loan.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="WebForm7.aspx.designer.cs">
-      <DependentUpon>WebForm7.aspx</DependentUpon>
+    <Compile Include="loan.aspx.designer.cs">
+      <DependentUpon>loan.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

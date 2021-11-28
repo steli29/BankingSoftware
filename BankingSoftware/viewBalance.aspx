@@ -3,11 +3,14 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <link href="customCss/StyleSheet1.css" rel="stylesheet" />
+    <h2 class="font-monospace" style="text-align:center">Account</h2>
 
-    <h2 class="display-1 font-monospace" style="text-align:center">Account</h2>
-    <h2 style="color:cornflowerblue; text-align:left;float:left;" class="small-text">Your Balance is: </h2>
-    <h1 style="color:coral" class="display-3 font-monospace big-text">15200</h1>
-    <hr style="clear:both"/>
+    <div class="card card-body col-md-4 mx-auto">
+            <h2 style="color:cornflowerblue; text-align:center;float:left; text-decoration:underline" class="small-text">Your Balance</h2>
+            <h1 style="color:coral; text-align:center; font-style:italic" class="font-monospace">15200 EUR</h1>
+    </div>
+    
+    <hr style="clear:both"/>    
     <br />    <br /><br />
     
     <h1 class="display-5 font-monospace" style="text-align:center">Your last transactions</h1>
