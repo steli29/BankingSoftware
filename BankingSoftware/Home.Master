@@ -24,7 +24,7 @@
 
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item active">
-                        <asp:LinkButton CssClass="nav-link"  runat="server">View Balance</asp:LinkButton>
+                        <asp:LinkButton CssClass="nav-link"  runat="server" href="viewBalance.aspx">View Balance</asp:LinkButton>
                     </li>
                     <li class="nav-item active">
                         <asp:LinkButton CssClass="nav-link"  runat="server" href="myCards.aspx">My Cards</asp:LinkButton>
@@ -33,7 +33,7 @@
                         <asp:LinkButton CssClass="nav-link"  runat="server">Money transfer</asp:LinkButton>
                     </li>
                     <li class="nav-item active">
-                        <asp:LinkButton CssClass="nav-link"  runat="server">Add Funds</asp:LinkButton>
+                        <asp:LinkButton CssClass="nav-link"  runat="server" href="addfunds.aspx">Add Funds</asp:LinkButton>
                     </li>
                     <li class="nav-item active">
                         <asp:LinkButton CssClass="nav-link"  runat="server">Apply for loan</asp:LinkButton>
@@ -42,7 +42,7 @@
 
                  <ul class="navbar-nav">
                       <li class="nav-item active">
-                        <asp:LinkButton CssClass="nav-link"  runat="server">Login</asp:LinkButton>
+                        <asp:LinkButton CssClass="nav-link"  runat="server" href="login.aspx">Login</asp:LinkButton>
                     </li>
                     <li class="nav-item active">
                         <asp:LinkButton CssClass="nav-link"  runat="server" href="signup.aspx">Sign up</asp:LinkButton>

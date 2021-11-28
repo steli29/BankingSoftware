@@ -11,7 +11,7 @@ namespace BankingSoftware
 {
 
 
-    public partial class WebForm5
+    public partial class WebForm6
     {
 
         /// <summary>
