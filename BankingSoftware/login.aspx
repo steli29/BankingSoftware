@@ -14,6 +14,7 @@
                 <div class="centered font-monospace"><h1 style="color:black">WELCOME TO OUR WEBSITE</h1><br /><h4 style="color:black">Please log-in to access your balance information.<br /> You are a new user? Hurry up and create account!</h4></div>
             </div>
             <div class="col">
+                <div></div>
                 <h1 class="font-monospace">Sign in</h1>
                 <asp:TextBox CssClass="form-control col-2" Font-Size="X-Large" ID="TextBox1" Placeholder="Enter Username"  runat="server"></asp:TextBox><br />
                 <asp:TextBox CssClass="form-control col-2" Font-Size="X-Large" TextMode="Password" Placeholder="Enter Password" ID="TextBox2" runat="server"></asp:TextBox><br />
