@@ -11,7 +11,21 @@ namespace BankingSoftware
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            //session[user_id] ?? -> ul[id=user]
+            try
+            {
+                if(Session["user_id"] != null)
+                {
+                    signin.Visible = false;
+                    signup.Visible = false;
+                    logout.Visible = true;
+                }
+                //TODO function buttons should be hidden
+            }
+            catch(Exception ex)
+            {
 
+            }
         }
     }
 }
