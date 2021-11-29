@@ -14,17 +14,17 @@
             </div>
             
 
-         <asp:TextBox ID="ReciverID" CssClass="form-control" runat="server" >Reciver ID</asp:TextBox>
+         <asp:TextBox ID="ReciverID" CssClass="form-control" runat="server" placeholder="Reciver ID"></asp:TextBox>
               <br /> <?/br>
-         <asp:TextBox ID="ReciverName" CssClass="form-control" runat="server">Reciver Name</asp:TextBox>
+         <asp:TextBox ID="ReciverName" CssClass="form-control" runat="server" placeholder="Reciver Name"></asp:TextBox>
               <br /> <?/br>
-         <asp:TextBox ID="YourPassword" CssClass="form-control" runat="server">Your Password</asp:TextBox>
+         <asp:TextBox ID="YourPassword" CssClass="form-control" runat="server" placeholder="Your Password"></asp:TextBox>
               <br /> <?/br>
-         <asp:TextBox ID="YourPhoneNumber" CssClass="form-control" runat="server">Your Phone Number</asp:TextBox>
+         <asp:TextBox ID="YourPhoneNumber" CssClass="form-control" runat="server" placeholder="Your Phone Number"></asp:TextBox>
               <br /> <?/br>
-         <asp:TextBox ID="AmountOfMoney" CssClass="form-control" runat="server" >Amount Of Money</asp:TextBox>
+         <asp:TextBox ID="AmountOfMoney" CssClass="form-control" runat="server" placeholder="Amount Of Money"></asp:TextBox>
               <br /> <?/br>
-         <asp:TextBox ID="Reason" CssClass="form-control" TextMode="MultiLine" runat="server">Reason</asp:TextBox>
+         <asp:TextBox ID="Reason" CssClass="form-control" TextMode="MultiLine" runat="server" placeholder="Reason"></asp:TextBox>
 
                     <div class="form-group" >
         <asp:Button  ID="Button2" CssClass="btn btn-info col-12 mt-5 btn-lg" runat="server" Text="Submit"/>

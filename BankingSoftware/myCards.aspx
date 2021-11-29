@@ -3,11 +3,20 @@
     <link href="./customCss/cards.css" rel="stylesheet" type="text/css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-<div class="col-lg-2 col-md-2 col-xs-12 col-sm-6"> <button class="section2_btn btn22" type="button">Request new card</button> </div>
+<div class="col-lg-2 col-md-2 col-xs-12 col-sm-6 mx-auto"> 
+<div class="row">
+    <div class="col">
+        <center>
+            <h4>My cards</h4>
+            <hr>
+        </center>
+    </div>
+</div>
+<button class="section2_btn btn22" type="button">Request new card</button> </div>
 <div class="wrapper">
     <div class="card">
         <div class="upper">
-            <h6>Credit</h6>
+            <h6>Debit</h6>
             <h4>Visa</h4>
         </div>
         <div class="lower">
@@ -15,9 +24,7 @@
             <h6>09/22</h6>
         </div>
     </div>
-</div>
 
-    <div class="wrapper">
     <div class="card">
         <div class="upper">
             <h6>Credit</h6>
@@ -29,6 +36,5 @@
         </div>
     </div>
 </div>
-
 
 </asp:Content>

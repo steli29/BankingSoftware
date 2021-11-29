@@ -13,13 +13,13 @@
                 </div>
             </div>
         
-        <asp:TextBox ID="FullName" CssClass="form-control" runat="server">Full Name</asp:TextBox>
+        <asp:TextBox ID="FullName" CssClass="form-control" runat="server" placeholder="Full Name"></asp:TextBox>
          <br /> <?/br>
-        <asp:TextBox ID="ContactNumber" CssClass="form-control" runat="server">Contact Number</asp:TextBox>
+        <asp:TextBox ID="ContactNumber" CssClass="form-control" runat="server" placeholder="Contact Number"></asp:TextBox>
          <br /> <?/br>
-        <asp:TextBox ID="CityName" CssClass="form-control" runat="server">City Name</asp:TextBox>
+        <asp:TextBox ID="CityName" CssClass="form-control" runat="server" placeholder="City"></asp:TextBox>
          <br /> <?/br>
-        <asp:TextBox ID="NMI" CssClass="form-control" runat="server">Net Monthly Income</asp:TextBox>
+        <asp:TextBox ID="NMI" CssClass="form-control" runat="server" placeholder="Net Monthly Income"></asp:TextBox>
          <br /> <?/br>
 
 

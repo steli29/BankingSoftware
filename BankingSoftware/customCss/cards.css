@@ -1,20 +1,19 @@
 ﻿@import url('https://fonts.googleapis.com/css2?family=Maven+Pro&display=swap');
 
-body {
-    font-family: 'Maven Pro', sans-serif
-}
 
 .wrapper {
     height: 50vh;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items:center;
 }
 
 .card {
+    font-family: 'Maven Pro', sans-serif;
     height: 180px;
     width: 350px;
     padding: 20px;
+    margin: 20px;
     background-color: #fff;
     border-radius: 14px;
     position: relative;
@@ -82,7 +81,7 @@ body {
     border: 2px solid #4285f4;
     color: #4285f4;
     position: absolute;
-    left: 50%;
+    left: 45%;
 
 }
 
