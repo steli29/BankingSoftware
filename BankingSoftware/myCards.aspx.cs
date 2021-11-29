@@ -13,5 +13,11 @@ namespace BankingSoftware
         {
 
         }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            //Send request to Data base
+            Response.Write("<script>alert('My test');</script>");
+        }
     }
 }

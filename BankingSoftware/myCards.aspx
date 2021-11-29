@@ -12,7 +12,8 @@
         </center>
     </div>
 </div>
-<button class="section2_btn btn22" type="button">Request new card</button> </div>
+    </div>
+    <asp:Button ID="Button1" runat="server" class="section2_btn btn22" Text="Request new card" OnClick="Button1_Click"/>
 <div class="wrapper">
     <div class="card">
         <div class="upper">
