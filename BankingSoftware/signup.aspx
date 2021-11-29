@@ -86,7 +86,7 @@
                 <div class="col-md-6">
                     <label>Country</label>
                     <div class="form-group">
-                        <asp:DropDownList ID="DropDownList1" CssClass="form-control" runat="server">
+                        <asp:DropDownList ID="Country" CssClass="form-control" runat="server">
                             <asp:ListItem Text="Bulgaria" Value="Bulgaria" />
                             <asp:ListItem Text="England" Value="England" />
                             <asp:ListItem Text="Spain" Value="Spain" />
@@ -105,7 +105,7 @@
                  <div class="col-md-6">
                         <label>State</label>
                         <div class="form-group">
-                            <asp:TextBox class="form-control" ID="TextBox1" runat="server" placeholder="State"></asp:TextBox>                            
+                            <asp:TextBox class="form-control" ID="State" runat="server" placeholder="State"></asp:TextBox>                            
                         </div>
                      </div>
             </div>
@@ -114,13 +114,13 @@
                      <div class="col-md-6">
                         <label>City</label>
                         <div class="form-group">
-                           <asp:TextBox class="form-control" ID="TextBox6" runat="server" placeholder="City"></asp:TextBox>
+                           <asp:TextBox class="form-control" ID="City" runat="server" placeholder="City"></asp:TextBox>
                         </div>
                      </div>
                      <div class="col-md-6">
                         <label>Pincode</label>
                         <div class="form-group">
-                           <asp:TextBox class="form-control" ID="TextBox7" runat="server" placeholder="Pincode" TextMode="Number"></asp:TextBox>
+                           <asp:TextBox class="form-control" ID="Pin" runat="server" placeholder="Pincode" TextMode="Number"></asp:TextBox>
                         </div>
                      </div>
                   </div>
@@ -135,7 +135,7 @@
                   </div>
 
                 <div class="form-group">
-                    <asp:Button ID="Button1" runat="server" CssClass="btn btn-info col-12 mt-5 btn-lg" Text="Sign up"/>
+                    <asp:Button ID="Signup" runat="server" CssClass="btn btn-info col-12 mt-5 btn-lg" OnClick="Signup_Click" Text="Sign up"/>
             </div>
         </div>
         <a href="homepage.aspx"><< Back to Home</a><br><br>
