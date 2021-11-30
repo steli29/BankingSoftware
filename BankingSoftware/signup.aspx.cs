@@ -6,7 +6,7 @@ using System.Data.SqlClient;
 
 namespace BankingSoftware
 {
-    public partial class WebForm2 : System.Web.UI.Page
+    public partial class signup : System.Web.UI.Page
     {
 
         string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
@@ -18,8 +18,11 @@ namespace BankingSoftware
 
         protected void Signup_Click(object sender, EventArgs e)
         {
-            if(checkUserExists())
+            if (checkUserExists())
+            {
                 SignUp();
+
+            }
             else
                 Response.Write("<script>alert('This User ID is taken, try another one!');</script>");
         }
@@ -39,8 +42,8 @@ namespace BankingSoftware
                     string name = Name.Text.Trim() + " " + Surname.Text.Trim();
                     string address = Country.Text + " " + State.Text + " " + City.Text + " " + Pin.Text.Trim() + " " + FAdress.Text;
 
-                    SqlCommand cmd = new SqlCommand("INSERT INTO users_tbl (user_id, name, email, number, dob, password, address) " +
-                        "values(@user_id, @name, @email, @number, @dob, @password, @address)",con);
+                    SqlCommand cmd = new SqlCommand("INSERT INTO users_tbl (user_id, name, email, number, dob, password, address, balance) " +
+                        "values(@user_id, @name, @email, @number, @dob, @password, @address,"+ 0 +" )",con);
                     cmd.Parameters.AddWithValue("@user_id", Uname.Text.Trim());
                     cmd.Parameters.AddWithValue("@name", name);
                     cmd.Parameters.AddWithValue("@email", Email.Text.Trim());
@@ -50,8 +53,7 @@ namespace BankingSoftware
                     cmd.Parameters.AddWithValue("@address", address);
                     cmd.ExecuteNonQuery();
                     con.Close();
-                    Response.Write("<script>alert('Sign up Successful!');</script>");
-                    Response.Redirect("signIn.aspx");
+                    Response.Redirect("signin.aspx",false);
 
                 }
                 else
