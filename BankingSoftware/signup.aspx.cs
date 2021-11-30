@@ -51,7 +51,7 @@ namespace BankingSoftware
                     cmd.ExecuteNonQuery();
                     con.Close();
                     Response.Write("<script>alert('Sign up Successful!');</script>");
-                    Response.Redirect("login.aspx");
+                    Response.Redirect("signIn.aspx");
 
                 }
                 else

@@ -24,31 +24,31 @@
 
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item active">
-                        <asp:LinkButton CssClass="nav-link"  runat="server" href="viewBalance.aspx">View Balance</asp:LinkButton>
+                        <asp:LinkButton CssClass="nav-link" ID="ViewBalance" runat="server" href="viewBalance.aspx">View Balance</asp:LinkButton>
                     </li>
                     <li class="nav-item active">
-                        <asp:LinkButton CssClass="nav-link"  runat="server" href="myCards.aspx">My Cards</asp:LinkButton>
+                        <asp:LinkButton CssClass="nav-link" ID="MyCard" runat="server" href="myCards.aspx">My Cards</asp:LinkButton>
                     </li>
                     <li class="nav-item active">
-                        <asp:LinkButton CssClass="nav-link"  runat="server" href="MoneyTrans.aspx">Money transfer</asp:LinkButton>
+                        <asp:LinkButton CssClass="nav-link" ID="MoneyTrans" runat="server" href="MoneyTrans.aspx">Money transfer</asp:LinkButton>
                     </li>
                     <li class="nav-item active">
-                        <asp:LinkButton CssClass="nav-link"  runat="server" href="addfunds.aspx">Add Funds</asp:LinkButton>
+                        <asp:LinkButton CssClass="nav-link" ID="AddFunds" runat="server" href="addfunds.aspx">Add Funds</asp:LinkButton>
                     </li>
                     <li class="nav-item active">
-                        <asp:LinkButton CssClass="nav-link"  runat="server" href="applyforloan.aspx">Apply for loan</asp:LinkButton>
+                        <asp:LinkButton CssClass="nav-link" ID="Loan" runat="server" href="applyforloan.aspx">Apply for loan</asp:LinkButton>
                     </li>
                 </ul>
 
                  <ul class="navbar-nav">
                       <li class="nav-item active">
-                        <asp:LinkButton CssClass="nav-link"  runat="server" href="login.aspx" ID="signin">Sign in</asp:LinkButton>
+                        <asp:LinkButton CssClass="nav-link"  runat="server" href="signIn.aspx" ID="signin">Sign in</asp:LinkButton>
                     </li>
                     <li class="nav-item active">
                         <asp:LinkButton CssClass="nav-link"  runat="server" href="signup.aspx" ID="signup">Sign up</asp:LinkButton>
                     </li>
                      <li class="nav-item active">
-                        <asp:LinkButton CssClass="nav-link"  runat="server" href="javascript:void(0)" Visible="false" ID="logout">Logout</asp:LinkButton>
+                        <asp:LinkButton CssClass="nav-link"  runat="server" OnClick="Logout_Click" Visible="false" ID="Logout">Logout</asp:LinkButton>
                     </li>
                  </ul>
 

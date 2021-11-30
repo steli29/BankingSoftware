@@ -18,7 +18,17 @@ namespace BankingSoftware
                 {
                     signin.Visible = false;
                     signup.Visible = false;
-                    logout.Visible = true;
+                    Logout.Visible = true;
+                }
+                else
+                {
+                    ViewBalance.Visible = false;
+                    AddFunds.Visible = false;
+                    MoneyTrans.Visible = false;
+                    MyCard.Visible = false;
+                    Loan.Visible = false;  
+                    Logout.Visible=false;   
+
                 }
                 //TODO function buttons should be hidden
             }
@@ -26,6 +36,13 @@ namespace BankingSoftware
             {
 
             }
+        }
+
+        protected void Logout_Click(object sender, EventArgs e)
+        {
+            Session["user_id"] = null;
+            Session["name"] = null;
+            Response.Redirect("homepage.aspx");
         }
     }
 }
