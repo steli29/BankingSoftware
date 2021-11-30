@@ -13,7 +13,7 @@
     </div>
 </div>
     </div>
-    <asp:Button ID="Button1" runat="server" class="section2_btn btn22" Text="Request new card" OnClick="Button1_Click"/>
+    <asp:Button ID="RequestCard" runat="server" class="section2_btn btn22" Text="Request new card" OnClick="RequestCard_Click"/>
 <div class="wrapper">
     <div class="card">
         <div class="upper">
