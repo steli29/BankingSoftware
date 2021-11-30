@@ -71,7 +71,6 @@
     <Content Include="imgs\banner.jpg" />
     <Content Include="imgs\logo2.jpg" />
     <Content Include="viewBalance.aspx" />
-    <Content Include="Web.config" />
     <Content Include="homepage.aspx" />
     <Content Include="signup.aspx" />
     <Content Include="myCards.aspx" />
@@ -79,6 +78,7 @@
     <Content Include="addfunds.aspx" />
     <Content Include="applyforloan.aspx" />
     <Content Include="MoneyTrans.aspx" />
+    <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Home.Master.cs">
