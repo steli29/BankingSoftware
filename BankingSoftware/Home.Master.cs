@@ -22,12 +22,12 @@ namespace BankingSoftware
                 }
                 else
                 {
-                    ViewBalance.Visible = false;
+                    /*ViewBalance.Visible = false;
                     AddFunds.Visible = false;
                     MoneyTrans.Visible = false;
                     MyCard.Visible = false;
                     Loan.Visible = false;  
-                    Logout.Visible=false;   
+                    Logout.Visible=false;*/   
 
                 }
                 //TODO function buttons should be hidden

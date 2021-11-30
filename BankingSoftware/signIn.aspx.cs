@@ -47,5 +47,15 @@ namespace BankingSoftware
                 Response.Write("<script>alert('" + ex.Message +"');</script>");
             }
         }
+
+        protected void Redirect_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("signup.aspx");
+        }
+
+        protected void Change_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

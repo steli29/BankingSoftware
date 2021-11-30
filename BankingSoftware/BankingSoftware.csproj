@@ -68,17 +68,20 @@
     <Content Include="bootstrap\bootstrap.min.css" />
     <Content Include="customCss\cards.css" />
     <Content Include="customCss\StyleSheet1.css" />
+    <Content Include="imgs\picture.jpg" />
     <Content Include="imgs\banner.jpg" />
-    <Content Include="imgs\logo2.jpg" />
+    <Content Include="imgs\logo.png" />
+    <Content Include="imgs\signin.jpg" />
     <Content Include="viewBalance.aspx" />
     <Content Include="homepage.aspx" />
     <Content Include="signup.aspx" />
     <Content Include="myCards.aspx" />
-    <Content Include="signIn.aspx" />
+    <Content Include="signin.aspx" />
     <Content Include="addfunds.aspx" />
     <Content Include="applyforloan.aspx" />
     <Content Include="MoneyTrans.aspx" />
     <Content Include="Web.config" />
+    <Content Include="passwordchange.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Home.Master.cs">
@@ -110,12 +113,12 @@
     <Compile Include="myCards.aspx.designer.cs">
       <DependentUpon>myCards.aspx</DependentUpon>
     </Compile>
-    <Compile Include="signIn.aspx.cs">
-      <DependentUpon>signIn.aspx</DependentUpon>
+    <Compile Include="signin.aspx.cs">
+      <DependentUpon>signin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="signIn.aspx.designer.cs">
-      <DependentUpon>signIn.aspx</DependentUpon>
+    <Compile Include="signin.aspx.designer.cs">
+      <DependentUpon>signin.aspx</DependentUpon>
     </Compile>
     <Compile Include="addfunds.aspx.cs">
       <DependentUpon>addfunds.aspx</DependentUpon>
@@ -144,6 +147,13 @@
     </Compile>
     <Compile Include="MoneyTrans.aspx.designer.cs">
       <DependentUpon>MoneyTrans.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="passwordchange.aspx.cs">
+      <DependentUpon>passwordchange.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="passwordchange.aspx.designer.cs">
+      <DependentUpon>passwordchange.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
