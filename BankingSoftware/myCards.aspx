@@ -14,28 +14,21 @@
 </div>
     </div>
     <asp:Button ID="RequestCard" runat="server" class="section2_btn btn22" Text="Request new card" OnClick="RequestCard_Click"/>
+    
 <div class="wrapper">
-    <div class="card">
+    <asp:Repeater ID="CardRepeater" runat="server">
+    <ItemTemplate>
+        <div class="card">
         <div class="upper">
             <h6>Debit</h6>
             <h4>Visa</h4>
         </div>
         <div class="lower">
-            <h5>Samuel Richard</h5> <span>4564 - 3432 - 3434 - 1236</span>
-            <h6>09/22</h6>
+            <h5><%#Eval("name")%></h5> <span><%#Eval("card_id")%></span>
+            <h6><%#Eval("expirationDate") %></h6>
         </div>
     </div>
-
-    <div class="card">
-        <div class="upper">
-            <h6>Credit</h6>
-            <h4>Visa</h4>
-        </div>
-        <div class="lower">
-            <h5>Samuel Richard</h5> <span>4564 - 3432 - 3434 - 1236</span>
-            <h6>09/22</h6>
-        </div>
+    </ItemTemplate>
+</asp:Repeater>
     </div>
-</div>
-
 </asp:Content>
