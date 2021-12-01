@@ -39,7 +39,7 @@ namespace BankingSoftware
                 }
                 else
                 {
-                    Response.Write("<script>alert('Username/email or password dont match!');</script>");
+                    Response.Write("<script>alert('Invalid credentials');</script>");
                 }
 
             }

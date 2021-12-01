@@ -24,7 +24,7 @@ namespace BankingSoftware
 
             }
             else
-                Response.Write("<script>alert('This User ID is taken, try another one!');</script>");
+                Response.Write("<script>alert('This User ID/Email is taken, try another one!');</script>");
         }
 
         void SignUp()
@@ -76,7 +76,7 @@ namespace BankingSoftware
                     con.Open();
                 }
 
-                SqlCommand cmd = new SqlCommand("SELECT * from users_tbl where user_id='" + Uname.Text.Trim() + "';", con);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM users_tbl WHERE user_id='" + Uname.Text.Trim() + "' OR email = '" + Email.Text.Trim() + "';", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
