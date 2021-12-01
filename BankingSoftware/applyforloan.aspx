@@ -37,7 +37,7 @@
 
      
              <div class="form-group" >
-        <asp:Button  ID="Button1" CssClass="btn btn-info col-12 mt-5 btn-lg" runat="server" Text="Submit"/>
+        <asp:Button  ID="SubmitLoan" OnClick="SubmitLoan_Click" CssClass="btn btn-info col-12 mt-5 btn-lg" runat="server" Text="Submit"/>
                  </div>
 
     </div>
