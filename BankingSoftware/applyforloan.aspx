@@ -21,7 +21,8 @@
          <br /> <?/br>
         <asp:TextBox ID="NMI" CssClass="form-control" runat="server" placeholder="Net Monthly Income"></asp:TextBox>
          <br /> <?/br>
-
+        <asp:TextBox ID="MoneyLoan" CssClass="form-control" runat="server" placeholder="Needed Amount"></asp:TextBox>
+         <br /> <?/br>
 
          <div class="form-group" >
           <asp:DropDownList ID="DropDownList1" CssClass="form-control" runat="server">
