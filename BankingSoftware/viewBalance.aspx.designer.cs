@@ -24,31 +24,31 @@ namespace BankingSoftware
         protected global::System.Web.UI.WebControls.Repeater Balance;
 
         /// <summary>
-        /// Button1 control.
+        /// All control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.Button All;
 
         /// <summary>
-        /// Button2 control.
+        /// Income control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button2;
+        protected global::System.Web.UI.WebControls.Button Income;
 
         /// <summary>
-        /// Button3 control.
+        /// Costs control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button3;
+        protected global::System.Web.UI.WebControls.Button Costs;
 
         /// <summary>
         /// Transaction control.

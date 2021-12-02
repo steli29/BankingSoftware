@@ -35,7 +35,7 @@ namespace BankingSoftware
                 cmd = new SqlCommand("SELECT * FROM balance_tbl FULL OUTER JOIN users_tbl ON users_tbl.user_id = balance_tbl.user_id WHERE users_tbl.user_id='" + Session["user_id"] + "';", con);
                 SqlDataAdapter db = new SqlDataAdapter(cmd);
                 DataSet de = new DataSet();
-                da = new SqlDataAdapter(cmd);
+                db = new SqlDataAdapter(cmd);
                 db.Fill(de);
                 Transaction.DataSource = de;
                 Transaction.DataBind();
@@ -45,6 +45,58 @@ namespace BankingSoftware
                 Response.Write("<script>alert('" + ex.Message + "');</script>");
             }
         }
-    
+
+        public void All_Click(object sender, EventArgs e)
+        {
+            SqlConnection con = new SqlConnection(strcon);
+            if (con.State == ConnectionState.Closed)
+            {
+                con.Open();
+            }
+
+            SqlCommand cmd = new SqlCommand("SELECT * FROM balance_tbl FULL OUTER JOIN users_tbl ON users_tbl.user_id = balance_tbl.user_id WHERE users_tbl.user_id='" + Session["user_id"] + "';", con);
+            SqlDataAdapter db = new SqlDataAdapter(cmd);
+            DataSet de = new DataSet();
+            db = new SqlDataAdapter(cmd);
+            db.Fill(de);
+            Transaction.DataSource = de;
+            Transaction.DataBind();
+        }
+
+        public void Income_Click(object sender, EventArgs e)
+        {
+            SqlConnection con = new SqlConnection(strcon);
+            if (con.State == ConnectionState.Closed)
+            {
+                con.Open();
+            }
+
+            SqlCommand cmd = new SqlCommand("SELECT * FROM balance_tbl FULL OUTER JOIN users_tbl ON users_tbl.user_id = balance_tbl.user_id WHERE users_tbl.user_id='" + Session["user_id"] + "' AND transaction_amount > '0';", con);
+            SqlDataAdapter db = new SqlDataAdapter(cmd);
+            DataSet de = new DataSet();
+            db = new SqlDataAdapter(cmd);
+            db.Fill(de);
+            Transaction.DataSource = de;
+            Transaction.DataBind();
+        }
+
+        public void Costs_Click(object sender, EventArgs e)
+        {
+            SqlConnection con = new SqlConnection(strcon);
+            if (con.State == ConnectionState.Closed)
+            {
+                con.Open();
+            }
+
+            SqlCommand cmd = new SqlCommand("SELECT * FROM balance_tbl FULL OUTER JOIN users_tbl ON users_tbl.user_id = balance_tbl.user_id WHERE users_tbl.user_id='" + Session["user_id"] + "' AND transaction_amount < '0';", con);
+            SqlDataAdapter db = new SqlDataAdapter(cmd);
+            DataSet de = new DataSet();
+            db = new SqlDataAdapter(cmd);
+            db.Fill(de);
+            Transaction.DataSource = de;
+            Transaction.DataBind();
+        }
+
+
     }
 }
