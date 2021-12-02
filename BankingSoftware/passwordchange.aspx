@@ -12,28 +12,43 @@
                 </center>
             </div>
         </div>
-
         <div class="row">
-            <div class="col-md-8 mx-auto">
-                <label>New Password</label>
-                <div class="form-group">
-                    <asp:TextBox CssClass="form-control" ID="Npass" runat="server" placeholder="New Password" TextMode="Password"></asp:TextBox>
-                </div>
+        <div class="col-md-8 mx-auto">
+            <div class="form-group">
+                <asp:TextBox CssClass="form-control" ID="Email" runat="server" placeholder="Email" TextMode="Email"></asp:TextBox>
             </div>
         </div>
+        </div>
+        
+        <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="form-group">
+                <asp:TextBox Visible="false" CssClass="form-control" ID="Code" runat="server" placeholder="Security Code" TextMode="Number"></asp:TextBox>
+            </div>
+        </div>
+        </div>
+
+        <div class="row">
+                <div class="col-md-8 mx-auto">
+                    <div class="form-group">
+                        <asp:TextBox Visible="false" CssClass="form-control" ID="Npass" runat="server" placeholder="New Password" TextMode="Password"></asp:TextBox>
+                    </div>
+                </div>
+            </div>
 
         <div class="row">
             <div class="col-md-8 mx-auto mt-2">
-                <label>Confirm New Password</label>
                 <div class="form-group">
-                    <asp:TextBox CssClass="form-control" ID="CNpass" runat="server" placeholder="Confirm New Password" TextMode="Password"></asp:TextBox>
+                    <asp:TextBox Visible="false" CssClass="form-control" ID="CNpass" runat="server" placeholder="Confirm New Password" TextMode="Password"></asp:TextBox>
                 </div>
             </div>
         </div>
 
-            <div class="form-group">
+        <div class="form-group">
                 <center>
-                    <asp:Button ID="Button1" runat="server" CssClass="btn btn-danger col-10 mt-3 " Text="Change"/>
+                    <asp:Button ID="Send" runat="server" CssClass="btn btn-danger col-10 mt-3 " Visible="true" OnClick="Send_Click" Text="Send"/>
+                    <asp:Button ID="Check" runat="server" CssClass="btn btn-danger col-10 mt-3 " Visible="false" OnClick="Check_Click" Text="Check"/>
+                    <asp:Button ID="Submit" runat="server" CssClass="btn btn-danger col-10 mt-3 " Visible="false" OnClick="Submit_Click" Text="Submit"/>
                 </center>
         </div>
     </div>
