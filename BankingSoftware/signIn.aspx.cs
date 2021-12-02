@@ -2,7 +2,7 @@
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-
+using System.Web.UI;
 
 namespace BankingSoftware
 {
@@ -32,14 +32,17 @@ namespace BankingSoftware
                         Session["user_id"] = reader.GetValue(0).ToString();
                         Session["name"] = reader.GetValue(1).ToString();
                         Session["balance"] = reader.GetValue(7).ToString();
-                        Response.Write("<script>alert('Welcome " +reader.GetValue(1).ToString() + "!');</script>");
-                        Response.Redirect("viewBalance.aspx");
+                        //Response.Write("<script>alert('Welcome " +reader.GetValue(1).ToString() + "!');</script>");
+                        //Response.Redirect("viewBalance.aspx"); 
+
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "alert",
+                            "alert('Welcome, " + reader.GetValue(1).ToString() + "!');window.location ='viewBalance.aspx';", true);
                     }
                     
                 }
                 else
                 {
-                    Response.Write("<script>alert('Invalid credentials');</script>");
+                    Response.Write("<script>alert('Username/email or password dont match!');</script>");
                 }
 
             }

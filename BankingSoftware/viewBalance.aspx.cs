@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -9,9 +12,39 @@ namespace BankingSoftware
 {
     public partial class WebForm6 : System.Web.UI.Page
     {
+        string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
         protected void Page_Load(object sender, EventArgs e)
         {
+            try
+            {
+                SqlConnection con = new SqlConnection(strcon);
+                if (con.State == ConnectionState.Closed)
+                {
+                    con.Open();
+                }
+                SqlCommand cmd = new SqlCommand("SELECT * FROM  users_tbl  WHERE user_id='"+ Session["user_id"] +"';", con);
+                //cmd.ExecuteReader();
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                //DataTable dt = new DataTable();
+                DataSet ds = new DataSet();
+                da = new SqlDataAdapter(cmd);
+                da.Fill(ds);
+                Balance.DataSource = ds;
+                Balance.DataBind();
 
+                cmd = new SqlCommand("SELECT * FROM balance_tbl FULL OUTER JOIN users_tbl ON users_tbl.user_id = balance_tbl.user_id WHERE users_tbl.user_id='" + Session["user_id"] + "';", con);
+                SqlDataAdapter db = new SqlDataAdapter(cmd);
+                DataSet de = new DataSet();
+                da = new SqlDataAdapter(cmd);
+                db.Fill(de);
+                Transaction.DataSource = de;
+                Transaction.DataBind();
+            }
+            catch (Exception ex)
+            {
+                Response.Write("<script>alert('" + ex.Message + "');</script>");
+            }
         }
+    
     }
 }

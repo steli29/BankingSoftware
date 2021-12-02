@@ -7,7 +7,14 @@
 
     <div class="card card-body col-md-4 mx-auto">
             <h2 style="color:cornflowerblue; text-align:center;float:left; text-decoration:underline" class="small-text">Your Balance</h2>
-            <h1 style="color:coral; text-align:center; font-style:italic" class="font-monospace">15200 EUR</h1>
+            <h1 style="color:coral; text-align:center; font-style:italic" class="font-monospace"></h1>
+            <asp:Repeater ID="Balance" runat="server">
+                <ItemTemplate>
+                    <div>
+                        <h5><%#Eval("balance")%></h5>
+                    </div>
+                </ItemTemplate>
+            </asp:Repeater>
     </div>
     
     <hr style="clear:both"/>    
@@ -32,30 +39,16 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>27.12.2020</td>
-      <td>Zaplata ot firma</td>
-      <td style="color:green">1000</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>20.12.2020</td>
-      <td>Smetki post terminal</td>
-      <td style="color:red">320</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>12.12.2020</td>
-      <td>Zaplata ot firma</td>
-      <td style="color:green">1000</td>
-    </tr>
-    <tr>
-      <th scope="row">4</th>
-      <td>24.11.2020</td>
-      <td>Smetka Fantastico</td>
-      <td style="color:red">128</td>
-    </tr>
+      <asp:Repeater ID="Transaction" runat="server">
+        <ItemTemplate>
+            <tr>
+                <th scope="row">1</th>
+                <td>27.12.2020</td>
+                <td><%#Eval("info")%></td>
+                <td style="color:green"><%#Eval("transaction_amount")%></td>
+            </tr>
+         </ItemTemplate>
+      </asp:Repeater>
   </tbody>
 </table>
 </div>
