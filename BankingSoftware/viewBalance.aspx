@@ -45,7 +45,7 @@
                 <th scope="row"><%#Eval("transaction_id")%></th>
                 <td><%#Eval("date", "{0:d}")%></td>
                 <td><%#Eval("info")%></td>
-                <td style="color:green"><%#Eval("transaction_amount")%></td>
+                <td style=<%#(decimal)Eval("transaction_amount") < 0 ? "color:red" : "color:green" %>><%#Eval("transaction_amount")%></td>
             </tr>
          </ItemTemplate>
       </asp:Repeater>
