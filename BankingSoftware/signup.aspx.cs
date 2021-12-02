@@ -2,7 +2,7 @@
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-
+using System.Web.UI;
 
 namespace BankingSoftware
 {
@@ -53,8 +53,8 @@ namespace BankingSoftware
                     cmd.Parameters.AddWithValue("@address", address);
                     cmd.ExecuteNonQuery();
                     con.Close();
-                    Response.Redirect("signin.aspx",false);
-
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alert",
+                            "alert('Sign up Successfully!');window.location ='signin.aspx';", true);
                 }
                 else
                     Response.Write("<script>alert('Passwords do not match!');</script>");

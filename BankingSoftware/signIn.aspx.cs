@@ -32,9 +32,6 @@ namespace BankingSoftware
                         Session["user_id"] = reader.GetValue(0).ToString();
                         Session["name"] = reader.GetValue(1).ToString();
                         Session["balance"] = reader.GetValue(7).ToString();
-                        //Response.Write("<script>alert('Welcome " +reader.GetValue(1).ToString() + "!');</script>");
-                        //Response.Redirect("viewBalance.aspx"); 
-
                         ScriptManager.RegisterStartupScript(this, this.GetType(), "alert",
                             "alert('Welcome, " + reader.GetValue(1).ToString() + "!');window.location ='viewBalance.aspx';", true);
                     }

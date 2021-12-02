@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
+
 
 namespace BankingSoftware
 {
@@ -44,13 +41,13 @@ namespace BankingSoftware
                 cmd.Parameters.AddWithValue("@info", "Added from another card");
                 cmd.ExecuteNonQuery();
                 Session["balance"] = new_balance;
-                Response.Write("<script>alert('Added Funds Successful!');</script>");
 
                 _Cash = new_balance.ToString();
-
                 cmd = new SqlCommand("UPDATE users_tbl SET balance = '" + _Cash.Replace(',', '.').Trim() + "'", con);
                 cmd.ExecuteNonQuery();
                 con.Close();
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alert",
+                            "alert('Added Funds Successful!');window.location ='viewBalance.aspx';", true);
             }
             catch (Exception ex)
             {
