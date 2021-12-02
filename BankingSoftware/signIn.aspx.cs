@@ -56,7 +56,7 @@ namespace BankingSoftware
 
         protected void Change_Click(object sender, EventArgs e)
         {
-
+            Response.Redirect("passwordchange.aspx");
         }
     }
 }
