@@ -43,7 +43,7 @@
         <ItemTemplate>
             <tr>
                 <th scope="row"><%#Eval("transaction_id")%></th>
-                <td><%#Eval("date")%></td>
+                <td><%#Eval("date", "{0:d}")%></td>
                 <td><%#Eval("info")%></td>
                 <td style="color:green"><%#Eval("transaction_amount")%></td>
             </tr>

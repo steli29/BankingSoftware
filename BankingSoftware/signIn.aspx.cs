@@ -23,7 +23,7 @@ namespace BankingSoftware
                 if(con.State == ConnectionState.Closed) {
                     con.Open(); 
                 }
-                SqlCommand cmd = new SqlCommand("SELECT * FROM  users_tbl WHERE user_id='" +Username.Text.Trim() + "'OR email='"+ Username.Text.Trim()+"' AND password='" + Password.Text.Trim() +"';", con);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM  users_tbl WHERE (user_id='" +Username.Text.Trim() + "'OR email='"+ Username.Text.Trim()+"') AND password='" + Password.Text.Trim() +"';", con);
                 SqlDataReader reader = cmd.ExecuteReader();
                 if (reader.HasRows)
                 {
