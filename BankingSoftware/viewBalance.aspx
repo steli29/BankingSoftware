@@ -24,9 +24,9 @@
  
     <div class="table-div">
         <div class="mb-1 buttons-pos">
-    <asp:Button ID="All" class="btn btn-outline-primary" runat="server" Text="All" OnCLick="All_Click"/>
-    <asp:Button ID="Income" class="btn btn-outline-success" runat="server" Text="Income" OnCLick="Income_Click"/>
-    <asp:Button ID="Costs" class="btn btn-outline-danger" runat="server" Text="Costs" OnCLick="Costs_Click"/>
+    <asp:Button ID="All" Visible="false" class="btn btn-outline-primary" runat="server" Text="All" OnCLick="All_Click"/>
+    <asp:Button ID="Income" Visible="false" class="btn btn-outline-success" runat="server" Text="Income" OnCLick="Income_Click"/>
+    <asp:Button ID="Costs" Visible="false" class="btn btn-outline-danger" runat="server" Text="Costs" OnCLick="Costs_Click"/>
     </div>
 
     <table class="table table-info">

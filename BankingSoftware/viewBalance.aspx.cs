@@ -22,7 +22,7 @@ namespace BankingSoftware
                 {
                     con.Open();
                 }
-                SqlCommand cmd = new SqlCommand("SELECT * FROM  users_tbl  WHERE user_id='"+ Session["user_id"] +"';", con);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM  users_tbl  WHERE user_id='" + Session["user_id"] + "';", con);
                 //cmd.ExecuteReader();
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 //DataTable dt = new DataTable();
@@ -37,8 +37,16 @@ namespace BankingSoftware
                 DataSet de = new DataSet();
                 db = new SqlDataAdapter(cmd);
                 db.Fill(de);
-                Transaction.DataSource = de;
-                Transaction.DataBind();
+                SqlCommand cmdRows = new SqlCommand("SELECT COUNT(1) FROM balance_tbl WHERE user_id='" + Session["user_id"] + "';", con);
+                int UserExist = (int)cmdRows.ExecuteScalar();
+                if (UserExist != 0) 
+                {
+                    All.Visible = true;
+                    Income.Visible = true;
+                    Costs.Visible = true;
+                    Transaction.DataSource = de;
+                    Transaction.DataBind();
+                }
             }
             catch (Exception ex)
             {
