@@ -47,6 +47,7 @@ namespace BankingSoftware
                     Transaction.DataSource = de;
                     Transaction.DataBind();
                 }
+                con.Close();
             }
             catch (Exception ex)
             {

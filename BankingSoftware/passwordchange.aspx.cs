@@ -5,6 +5,8 @@ using System.Net.Mail;
 using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
+using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace BankingSoftware
 {
@@ -48,10 +50,12 @@ namespace BankingSoftware
 
         protected void Submit_Click(object sender, EventArgs e)
         {
-            if (Npass.Text == CNpass.Text)
+
+            if (checkPassworrd())
                 ChangePassword();
             else
-                Response.Write("<script>alert('Passwords do not match!');</script>");
+                Response.Write("<script>alert('Your password must contain at least 8 characters, " +
+                    "one capital letter and one number!');</script>");
         }
 
         void SendEmail()
@@ -103,38 +107,70 @@ namespace BankingSoftware
 
         void ChangePassword()
         {
-            SqlConnection con = new SqlConnection(strcon);
-            if (con.State == ConnectionState.Closed)
+            if (Npass.Text == CNpass.Text)
             {
-                con.Open();
-            }
-            SqlCommand cmd = new SqlCommand("SELECT * FROM users_tbl WHERE email = '" + emailcheck + "'", con);
-            SqlDataReader reader = cmd.ExecuteReader();
-            if (reader.HasRows)
-            {
-                while (reader.Read())
+                SqlConnection con = new SqlConnection(strcon);
+                if (con.State == ConnectionState.Closed)
                 {
-                    if (Npass.Text != reader.GetValue(5).ToString())
-                    {
-                        con.Close();
-                        con.Open();
-                        cmd = new SqlCommand("UPDATE users_tbl SET password = '"
-                            + Npass.Text.Trim() + "' WHERE email = '" + emailcheck + "'", con);
-                        cmd.ExecuteNonQuery();
-                        ScriptManager.RegisterStartupScript(this, GetType(), "alert",
-                            "alert('Password Changed!');window.location ='signin.aspx';", true);
-                        break;
-                    }
-                    else
-                        Response.Write("<script>alert('New password cannot be the same as the old password');</script>");
+                    con.Open();
                 }
+                SqlCommand cmd = new SqlCommand("SELECT * FROM users_tbl WHERE email = '" + emailcheck + "'", con);
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        if (Npass.Text != reader.GetValue(5).ToString())
+                        {
+                            con.Close();
+                            con.Open();
+                            cmd = new SqlCommand("UPDATE users_tbl SET password = '"
+                                + Npass.Text.Trim() + "' WHERE email = '" + emailcheck + "'", con);
+                            cmd.ExecuteNonQuery();
+                            ScriptManager.RegisterStartupScript(this, GetType(), "alert",
+                                "alert('Password Changed!');window.location ='signin.aspx';", true);
+                            break;
+                        }
+                        else
+                            Response.Write("<script>alert('New password cannot be the same as the old password');</script>");
+                    }
+                }
+                else
+                {
+                    Response.Write("<script>alert('Username/email or password dont match!');</script>");
+                }
+                con.Close();
             }
             else
+                Response.Write("<script>alert('Passwords do not match!');</script>");
+        }
+
+        bool checkPassworrd()
+        {
+            try
             {
-                Response.Write("<script>alert('Username/email or password dont match!');</script>");
+                char[] password = Npass.Text.ToCharArray();
+                bool length = password.Length >= 8;
+                bool anynumber = Npass.Text.Any(c => char.IsDigit(c));
+                bool uppercase = default;
+                foreach (char character in password)
+                {
+                    uppercase = Char.IsUpper(character);
+                    if (uppercase)
+                        break;
+                }
+                if (length && anynumber && uppercase)
+                    return true;
+                else
+                    return false;
+
             }
-            con.Close();
-            
+            catch (Exception ex)
+            {
+                Response.Write("<script>alert('" + ex.Message + "');</script>");
+                return false;
+            }
+
         }
 
     }

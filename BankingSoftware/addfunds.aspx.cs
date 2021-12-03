@@ -45,7 +45,8 @@ namespace BankingSoftware
                 Session["balance"] = new_balance;
 
                 _Cash = new_balance.ToString();
-                cmd = new SqlCommand("UPDATE users_tbl SET balance = '" + _Cash.Replace(',', '.').Trim() + "'", con);
+                cmd = new SqlCommand("UPDATE users_tbl SET balance = '" + _Cash.Replace(',', '.').Trim() 
+                    + "'WHERE user_id = '" + Session["user_id"].ToString() +"'", con);
                 cmd.ExecuteNonQuery();
                 con.Close();
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "alert",
