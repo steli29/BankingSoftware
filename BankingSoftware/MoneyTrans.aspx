@@ -15,7 +15,7 @@
             
          <asp:TextBox ID="ReceiverID" CssClass="form-control" runat="server" placeholder="Receiver ID"></asp:TextBox>
               <br /> <?/br>
-         <asp:TextBox ID="YourPassword" CssClass="form-control" runat="server" placeholder="Your Password"></asp:TextBox>
+         <asp:TextBox ID="YourPassword" CssClass="form-control" runat="server" placeholder="Your Password" TextMode="Password"></asp:TextBox>
               <br /> <?/br>
          <asp:TextBox ID="AmountOfMoney" CssClass="form-control" runat="server" placeholder="Amount Of Money"></asp:TextBox>
               <br /> <?/br>

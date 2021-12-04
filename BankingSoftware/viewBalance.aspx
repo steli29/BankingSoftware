@@ -32,7 +32,6 @@
     <table class="table table-info">
   <thead>
     <tr>
-      <th scope="col" style="width: 2%">#</th>
       <th scope="col" style="width: 5%">Date</th>
       <th scope="col" style="width: 40%">Info</th>
       <th scope="col" style="width: 5%">Price</th>
@@ -42,7 +41,6 @@
       <asp:Repeater ID="Transaction" runat="server">
         <ItemTemplate>
             <tr>
-                <th scope="row"><%#Eval("transaction_id")%></th>
                 <td><%#Eval("date", "{0:d}")%></td>
                 <td><%#Eval("info")%></td>
                 <td style=<%#(decimal)Eval("transaction_amount") < 0 ? "color:red" : "color:green" %>><%#Eval("transaction_amount")%></td>

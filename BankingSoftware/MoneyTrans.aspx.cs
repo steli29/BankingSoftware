@@ -21,7 +21,7 @@ namespace BankingSoftware
         }
         protected void Transfer_Click(object sender, EventArgs e)
         {
-            bool[] check = { checkTextBox(), checkReceiverName(), checkYourPassword(), checkMoneyInput(), checkAmountOfMoney() };
+            bool[] check = { checkTextBox(), checkReceiverName(), checkIsYourId(), checkMoneyInput(), checkAmountOfMoney(), checkYourPassword() };
             if (check.All(x => x))
                 SendMoney();
             else
@@ -29,13 +29,15 @@ namespace BankingSoftware
                 if (!check[0])
                     Response.Write("<script>alert('Please fill in all fields!');</script>");
                 else if (!check[1])
-                    Response.Write("<script>alert('This User ID doesn't exist!');</script>");
+                    Response.Write("<script>alert('This User ID does not exist!');</script>");
                 else if (!check[2])
-                    Response.Write("<script>alert('Incorrect password!');</script>");
+                    Response.Write("<script>alert('Invalid user!');</script>");
                 else if (!check[3])
-                    Response.Write("<script>alert('No enought money to send!');</script>");
+                    Response.Write("<script>alert('Invalid money input!');</script>");
                 else if (!check[4])
                     Response.Write("<script>alert('No enought money to send!');</script>");
+                else if (!check[5])
+                    Response.Write("<script>alert('Incorrect password!');</script>");
             }
         }
 
@@ -60,21 +62,17 @@ namespace BankingSoftware
                 }
 
                 decimal new_balance = balance + decimal.Parse(cash);
-                con.Close();
-                con.Open();
-                //cmd.ExecuteNonQuery();
+                reader.Close();
 
-                string reason = Reason.Text;
-                string receiverID = ReceiverID.Text;
                 DateTime date = DateTime.Today;
 
                 cmd = new SqlCommand("INSERT INTO balance_tbl (user_id, new_balance, date, transaction_amount, info)" +
                     " values(@user_id, @new_balance, @date, @transaction_amount, @info)", con);
-                cmd.Parameters.AddWithValue("@user_id", receiverID);
+                cmd.Parameters.AddWithValue("@user_id", ReceiverID.Text);
                 cmd.Parameters.AddWithValue("@new_balance", new_balance);
                 cmd.Parameters.AddWithValue("@date", date);
                 cmd.Parameters.AddWithValue("@transaction_amount", decimal.Parse(cash));
-                cmd.Parameters.AddWithValue("@info", reason);
+                cmd.Parameters.AddWithValue("@info", Reason.Text);
                 cmd.ExecuteNonQuery();
 
                 cmd = new SqlCommand("UPDATE users_tbl SET balance = '" + new_balance
@@ -134,14 +132,12 @@ namespace BankingSoftware
                 }
 
                 SqlCommand cmd = new SqlCommand("SELECT * FROM users_tbl WHERE user_id='" + ReceiverID.Text + "';", con);
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
+                SqlDataReader reader = cmd.ExecuteReader();
 
-                if (dt.Rows.Count >= 1)
-                    return false;
-                else
-                    return true;
+                if (reader.Read()) {reader.Close(); return true; }
+                else  { reader.Close(); return false; }
+
+                
             }
             catch (Exception ex)
             {
@@ -149,7 +145,46 @@ namespace BankingSoftware
                 return false;
             }
         }
+        
+        bool checkIsYourId()
+        {
+            if (Session["user_id"].ToString() != ReceiverID.Text.Trim()) return true;
+            else return false;
+        }
 
+        bool checkMoneyInput()
+        {
+            try
+            {
+                return decimal.TryParse(AmountOfMoney.Text.ToString(), out decimal money);
+            }
+            catch (Exception ex)
+            {
+                Response.Write("<script>alert('" + ex.Message + "');</script>");
+                return false;
+            }
+        }
+        
+        bool checkAmountOfMoney()
+        {
+            try
+            {
+                if (checkMoneyInput())
+                {
+                    if (decimal.Parse(Session["balance"].ToString()) > decimal.Parse(AmountOfMoney.Text.Trim())) return true;
+                    else return false;
+                }
+
+                else return false;
+            }
+
+            catch (Exception ex)
+            {
+                Response.Write("<script>alert('" + ex.Message + "');</script>");
+                return false;
+            }
+        }
+        
         bool checkYourPassword()
         {
             try
@@ -160,57 +195,11 @@ namespace BankingSoftware
                     con.Open();
                 }
 
-                SqlCommand cmd = new SqlCommand("SELECT * FROM users_tbl WHERE user_id='" + ReceiverID.Text + "' AND password='" + YourPassword.Text + "';", con);
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-
-                if (dt.Rows.Count >= 1)
-                    return false;
-                else
-                    return true;
-            }
-            catch (Exception ex)
-            {
-                Response.Write("<script>alert('" + ex.Message + "');</script>");
-                return false;
-            }
-        }
-
-        bool checkAmountOfMoney()
-        {
-            try
-            {
-                SqlConnection con = new SqlConnection(strcon);
-                if (con.State == ConnectionState.Closed)
-                {
-                    con.Open();
-                }
-
-                SqlCommand cmd = new SqlCommand("SELECT * FROM users_tbl WHERE user_id='" + ReceiverID.Text + "' AND balance>='" + decimal.Parse(AmountOfMoney.Text.ToString()) + "';", con);
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-
-                if (dt.Rows.Count >= 1)
-                    return false;
-                else
-                    return true;
-            }
-            catch (Exception ex)
-            {
-                Response.Write("<script>alert('" + ex.Message + "');</script>");
-                return false;
-            }
-        }
-
-        bool checkMoneyInput()
-        {
-            try
-            {
-                decimal money;
-                bool success = decimal.TryParse(AmountOfMoney.Text.ToString(), out money);
-                return success;
+                SqlCommand cmd = new SqlCommand("SELECT * FROM users_tbl WHERE user_id='" + Session["user_id"].ToString() + "' AND password='" + YourPassword.Text + "';", con);
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read()) { return true; }
+                else return false;
+                con.Close();
             }
             catch (Exception ex)
             {
