@@ -75,23 +75,23 @@ namespace BankingSoftware
                 cmd.Parameters.AddWithValue("@info", Reason.Text);
                 cmd.ExecuteNonQuery();
 
-                cmd = new SqlCommand("UPDATE users_tbl SET balance = '" + new_balance
-                    + "' WHERE user_id = '" + ReceiverID.Text + "'", con);
+                cmd = new SqlCommand("UPDATE users_tbl SET balance = '" + new_balance.ToString().Replace(',', '.').Trim()
+                + "' WHERE user_id = '" + ReceiverID.Text + "'", con);
                 cmd.ExecuteNonQuery();
 
                 new_balance = decimal.Parse(Session["balance"].ToString()) - decimal.Parse(cash);
                 
-                cmd = new SqlCommand("UPDATE users_tbl SET balance = '" + new_balance
+                cmd = new SqlCommand("UPDATE users_tbl SET balance = '" + new_balance.ToString().Replace(',', '.').Trim()
                     + "' WHERE user_id = '" + Session["user_id"] + "'", con);
                 cmd.ExecuteNonQuery();
 
                 cmd = new SqlCommand("INSERT INTO balance_tbl (user_id, new_balance, date, transaction_amount, info)" +
                     " values(@user_id, @new_balance, @date, @transaction_amount, @info)", con);
                 cmd.Parameters.AddWithValue("@user_id", Session["user_id"].ToString());
-                cmd.Parameters.AddWithValue("@new_balance", new_balance);
+                cmd.Parameters.AddWithValue("@new_balance", new_balance.ToString().Replace(',', '.').Trim());
                 cmd.Parameters.AddWithValue("@date", date);
                 cmd.Parameters.AddWithValue("@transaction_amount", decimal.Parse(cash)*-1);
-                cmd.Parameters.AddWithValue("@info", "Sent money to " + ReceiverID.Text + ".");
+                cmd.Parameters.AddWithValue("@info", Reason.Text);
 
                 cmd.ExecuteNonQuery();
                 con.Close();
