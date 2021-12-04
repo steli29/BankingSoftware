@@ -2,50 +2,47 @@
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Web.UI;
 
 namespace BankingSoftware
 {
     public partial class WebForm3 : System.Web.UI.Page
-    {   class Card
-        {
-
-        }
+    {  
         string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
         protected void Page_Load(object sender, EventArgs e)
         {
-            try
-            {   
-                SqlConnection con = new SqlConnection(strcon);
-                if (con.State == ConnectionState.Closed)
-                {
-                    con.Open();
-                }
-                SqlCommand cmd = new SqlCommand("SELECT * FROM  cards_tbl FULL OUTER JOIN users_tbl ON cards_tbl.user_id = users_tbl.user_id WHERE cards_tbl.user_id='" + Session["user_id"] +"';" ,con);
-
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                //DataTable dt = new DataTable();
-                DataSet ds = new DataSet();
-                da = new SqlDataAdapter(cmd);
-                da.Fill(ds);
-                if(ds.Tables.Count > 0)
-                {
-                    CardRepeater.DataSource = ds;
-                    CardRepeater.DataBind();
-                }
-                /*foreach (DataRow row in dt.Rows)
-                {
-                    TextBox1.Text += row["expirationDate"].ToString();
-                    TextBox1.Text += row["pinCode"].ToString();
-                    TextBox1.Text += row["securityCode"].ToString();
-                    TextBox1.Text += row["user_id"].ToString();
-                    TextBox1.Text += row["card_id"].ToString();
-                    TextBox1.Text += "\n";
-
-                }*/
-            }
-            catch (Exception ex)
+            if (!Page.IsPostBack)
             {
-                Response.Write("<script>alert('" + ex.Message + "');</script>");
+                try
+                {
+                    SqlConnection con = new SqlConnection(strcon);
+                    if (con.State == ConnectionState.Closed)
+                    {
+                        con.Open();
+                    }
+                    SqlCommand cmd = new SqlCommand("SELECT * FROM  cards_tbl FULL OUTER JOIN users_tbl ON cards_tbl.user_id = users_tbl.user_id WHERE cards_tbl.user_id='" + Session["user_id"] + "';", con);
+
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    //DataTable dt = new DataTable();
+                    DataSet ds = new DataSet();
+                    da = new SqlDataAdapter(cmd);
+                    da.Fill(ds);
+                    if (ds.Tables.Count > 0)
+                    {
+                        if (ds.Tables[0].Rows.Count >= 2)
+                        {
+                            RequestCard.Visible = false;
+
+                        }
+                        CardRepeater.DataSource = ds;
+                        CardRepeater.DataBind();
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    Response.Write("<script>alert('" + ex.Message + "');</script>");
+                }
             }
         }
 
@@ -104,6 +101,17 @@ namespace BankingSoftware
                 month = "0" + month;
             }
             return month + "/" + year;
+        }
+
+        protected void ShowCodes_Click(object sender, EventArgs e)
+        {
+            Control pin = FindControl("#ctl00_ContentPlaceHolderMain_Pin");
+            Control sec = FindControl("#ctl00_ContentPlaceHolderMain_Sec");
+
+
+            pin.Visible = true;
+            sec.Visible = true;
+
         }
     }
 }

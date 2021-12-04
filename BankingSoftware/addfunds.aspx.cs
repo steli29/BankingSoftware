@@ -16,9 +16,36 @@ namespace BankingSoftware
 
         }
 
+
+
+
         protected void AddFunds_Click(object sender, EventArgs e)
         {
-            Funds();
+
+            if (string.IsNullOrEmpty(Card.Text) || string.IsNullOrEmpty(CVV.Text) || string.IsNullOrEmpty(Cash.Text) || string.IsNullOrEmpty(DueDate.Text))
+            {
+                Response.Write("<script>alert('Please fill in all fields!');</script>");
+            }
+            else if (Card.Text.Length != 16)
+            {
+                Response.Write("<script>alert('Card numbers needs to be 16!');</script>");
+            }
+            else if(checkduedate())
+            {
+                Response.Write("<script>alert('Card is expired');</script>");
+            }
+            else if (CVV.Text.Length != 3)
+            {
+                Response.Write("<script>alert('CVV needs to be numbers 3!');</script>");
+            }
+            else if (!decimal.TryParse(Cash.Text.Replace('.', ',').Trim(), out decimal result))
+            {
+                Response.Write("<script>alert('Invalid input');</script>");
+            }
+            else
+            {
+                Funds();
+            }
         }
 
         void Funds()
@@ -57,5 +84,31 @@ namespace BankingSoftware
                 Response.Write("<script>alert('" + ex.Message + "');</script>");
             }
         }
+
+
+        bool checkduedate()
+        {
+            try
+            {
+                DateTime date = DateTime.Now;
+                DateTime duedate = DateTime.Parse(DueDate.Text + "-01");
+                if (duedate.Year > date.Year || duedate.Month >= date.Month)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+             
+            }
+            catch (Exception ex)
+            {
+
+                Response.Write("<script>alert('" + ex.Message + "');</script>");
+                return false;
+            }
+        }
+
     }
 }
