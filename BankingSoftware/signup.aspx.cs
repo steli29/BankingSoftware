@@ -146,15 +146,15 @@ namespace BankingSoftware
             {
                 DateTime date = DateTime.Now.Date;
                 DateTime dateofbirth = DateTime.Parse(DoB.Text);
-                int d = date.Year - dateofbirth.Year;
-                if (d >= 18)
+                TimeSpan d = date.Subtract(dateofbirth);
+                if (d.Days >= 6575)
                     return true;
                 else
                     return false;
             }
             catch (Exception ex)
             {
-                Response.Write("<script>alert('" + ex.Message + "');</script>");
+                //Response.Write("<script>alert('" + ex.Message + "');</script>");
                 return false;
             }
         }
@@ -190,7 +190,7 @@ namespace BankingSoftware
         {
             try
             {
-                if (PNumber.Text.Length == 4 && !Regex.IsMatch(Pin.Text.Trim(), "[^0-9]"))
+                if (Pin.Text.Length == 4)
                     return true;
                 else
                     return false;
