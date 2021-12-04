@@ -15,22 +15,22 @@ namespace BankingSoftware
     {
 
         /// <summary>
-        /// ReciverID control.
+        /// ReceiversCardID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ReciverID;
+        protected global::System.Web.UI.WebControls.TextBox ReceiversCardID;
 
         /// <summary>
-        /// ReciverName control.
+        /// ReceiverID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ReciverName;
+        protected global::System.Web.UI.WebControls.TextBox ReceiverID;
 
         /// <summary>
         /// YourPassword control.
@@ -69,12 +69,12 @@ namespace BankingSoftware
         protected global::System.Web.UI.WebControls.TextBox Reason;
 
         /// <summary>
-        /// Button2 control.
+        /// Submit control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button2;
+        protected global::System.Web.UI.WebControls.Button Submit;
     }
 }

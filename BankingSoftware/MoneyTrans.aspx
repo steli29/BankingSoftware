@@ -14,9 +14,9 @@
             </div>
             
 
-         <asp:TextBox ID="ReciverID" CssClass="form-control" runat="server" placeholder="Reciver ID"></asp:TextBox>
+         <asp:TextBox ID="ReceiversCardID" CssClass="form-control" runat="server" placeholder="Receiver's Card ID"></asp:TextBox>
               <br /> <?/br>
-         <asp:TextBox ID="ReciverName" CssClass="form-control" runat="server" placeholder="Reciver Name"></asp:TextBox>
+         <asp:TextBox ID="ReceiverID" CssClass="form-control" runat="server" placeholder="Receiver ID"></asp:TextBox>
               <br /> <?/br>
          <asp:TextBox ID="YourPassword" CssClass="form-control" runat="server" placeholder="Your Password"></asp:TextBox>
               <br /> <?/br>
@@ -27,7 +27,7 @@
          <asp:TextBox ID="Reason" CssClass="form-control" TextMode="MultiLine" runat="server" placeholder="Reason"></asp:TextBox>
 
                     <div class="form-group" >
-        <asp:Button  ID="Button2" CssClass="btn btn-info col-12 mt-5 btn-lg" runat="server" Text="Submit"/>
+        <asp:Button  ID="Submit" CssClass="btn btn-info col-12 mt-5 btn-lg" runat="server" Text="Submit" OnClick="Transfer_Click"/>
                  </div>
 
             </div>
