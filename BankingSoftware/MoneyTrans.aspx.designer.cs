@@ -15,15 +15,6 @@ namespace BankingSoftware
     {
 
         /// <summary>
-        /// ReceiversCardID control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ReceiversCardID;
-
-        /// <summary>
         /// ReceiverID control.
         /// </summary>
         /// <remarks>
@@ -40,15 +31,6 @@ namespace BankingSoftware
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox YourPassword;
-
-        /// <summary>
-        /// YourPhoneNumber control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox YourPhoneNumber;
 
         /// <summary>
         /// AmountOfMoney control.

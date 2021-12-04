@@ -13,14 +13,9 @@
                 </div>
             </div>
             
-
-         <asp:TextBox ID="ReceiversCardID" CssClass="form-control" runat="server" placeholder="Receiver's Card ID"></asp:TextBox>
-              <br /> <?/br>
          <asp:TextBox ID="ReceiverID" CssClass="form-control" runat="server" placeholder="Receiver ID"></asp:TextBox>
               <br /> <?/br>
          <asp:TextBox ID="YourPassword" CssClass="form-control" runat="server" placeholder="Your Password"></asp:TextBox>
-              <br /> <?/br>
-         <asp:TextBox ID="YourPhoneNumber" CssClass="form-control" runat="server" placeholder="Your Phone Number"></asp:TextBox>
               <br /> <?/br>
          <asp:TextBox ID="AmountOfMoney" CssClass="form-control" runat="server" placeholder="Amount Of Money"></asp:TextBox>
               <br /> <?/br>
