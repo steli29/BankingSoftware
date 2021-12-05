@@ -10,7 +10,6 @@ namespace BankingSoftware
     public partial class WebForm3 : System.Web.UI.Page
     {
         string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
-        static string Prompt = "A";
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
@@ -39,13 +38,14 @@ namespace BankingSoftware
                         CardRepeater.DataSource = ds;
                         CardRepeater.DataBind();
                     }
-
+                    ShowCodes();
                 }
                 catch (Exception ex)
                 {
                     Response.Write("<script>alert('" + ex.Message + "');</script>");
                 }
             }
+            
         }
 
         protected void RequestCard_Click(object sender, EventArgs e)
@@ -105,33 +105,10 @@ namespace BankingSoftware
             return month + "/" + year;
         }
 
-        protected void ShowCodes_Click(object sender, EventArgs e)
+        void ShowCodes()
         {
-            getPassword();
-            var isMatching = checkIsMatching();
+            //ShowCodes.Attributes.Add("onclick", "return false;");
 
-            if (isMatching == true)
-            {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert("+Prompt+");", true);
-            }
-            else
-            {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert(" + Prompt + ");", true);
-
-            }
-        }
-
-        void getPassword()
-        {
-            Prompt = "<script langauge='javascript'>"
-            + "var pmt = prompt('Please enter your password!');"
-            + "document.getElementById('TextBox1').value=pmt; //pmt has got the user input value"
-            + "</script>";
-            Page.ClientScript.RegisterStartupScript(this.GetType(), "Prompt", Prompt);
-        }
-
-        bool checkIsMatching()
-        {
             SqlConnection con = new SqlConnection(strcon);
             if (con.State == ConnectionState.Closed)
             {
@@ -142,19 +119,9 @@ namespace BankingSoftware
             SqlDataReader dr = cmd.ExecuteReader();
             if (dr.Read())
             {
-                if (dr.GetValue(5).ToString() == Prompt)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                Session["pass"] = dr.GetValue(5).ToString();
             }
-            else
-            {
-                return false;
-            }
+
         }
     }
 }
