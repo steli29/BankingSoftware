@@ -14,7 +14,7 @@ namespace BankingSoftware
     public partial class WebForm7 : System.Web.UI.Page
     {
         string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
-
+        static decimal fee = 0.30M;
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -57,9 +57,8 @@ namespace BankingSoftware
                 decimal balance = default;
 
                 if (reader.Read())
-                {
                     balance = (decimal)reader.GetValue(7);
-                }
+
 
                 decimal new_balance = balance + decimal.Parse(cash);
                 reader.Close();
@@ -79,8 +78,9 @@ namespace BankingSoftware
                 + "' WHERE user_id = '" + ReceiverID.Text + "'", con);
                 cmd.ExecuteNonQuery();
 
-                new_balance = decimal.Parse(Session["balance"].ToString()) - decimal.Parse(cash);
-                
+                new_balance = decimal.Parse(Session["balance"].ToString()) - (decimal.Parse(cash) + fee);
+                Session["balance"] = new_balance;
+
                 cmd = new SqlCommand("UPDATE users_tbl SET balance = '" + new_balance.ToString().Replace(',', '.').Trim()
                     + "' WHERE user_id = '" + Session["user_id"] + "'", con);
                 cmd.ExecuteNonQuery();
@@ -90,11 +90,11 @@ namespace BankingSoftware
                 cmd.Parameters.AddWithValue("@user_id", Session["user_id"].ToString());
                 cmd.Parameters.AddWithValue("@new_balance", new_balance.ToString().Replace(',', '.').Trim());
                 cmd.Parameters.AddWithValue("@date", date);
-                cmd.Parameters.AddWithValue("@transaction_amount", decimal.Parse(cash)*-1);
+                cmd.Parameters.AddWithValue("@transaction_amount", (decimal.Parse(cash) + fee) * -1);
                 cmd.Parameters.AddWithValue("@info", Reason.Text);
-
                 cmd.ExecuteNonQuery();
                 con.Close();
+
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "alert",
                             "alert('Money Transfer is Successful!');window.location ='viewBalance.aspx';", true);
             }
@@ -134,8 +134,7 @@ namespace BankingSoftware
                 SqlCommand cmd = new SqlCommand("SELECT * FROM users_tbl WHERE user_id='" + ReceiverID.Text + "';", con);
                 SqlDataReader reader = cmd.ExecuteReader();
 
-                if (reader.Read()) {reader.Close(); return true; }
-                else  { reader.Close(); return false; }
+                return reader.Read();
 
                 
             }
@@ -148,15 +147,18 @@ namespace BankingSoftware
         
         bool checkIsYourId()
         {
-            if (Session["user_id"].ToString() != ReceiverID.Text.Trim()) return true;
-            else return false;
+            return Session["user_id"].ToString() != ReceiverID.Text.Trim();
         }
 
         bool checkMoneyInput()
         {
             try
             {
-                return decimal.TryParse(AmountOfMoney.Text.ToString(), out decimal money);
+                if (decimal.TryParse(AmountOfMoney.Text.ToString().Replace('.', ',').Trim(), out decimal money) && 
+                    decimal.Parse(AmountOfMoney.Text.ToString().Replace('.', ',').Trim()) != 0)
+                    return true ;
+                else
+                    return false;
             }
             catch (Exception ex)
             {
@@ -171,7 +173,7 @@ namespace BankingSoftware
             {
                 if (checkMoneyInput())
                 {
-                    if (decimal.Parse(Session["balance"].ToString()) > decimal.Parse(AmountOfMoney.Text.Trim())) return true;
+                    if (decimal.Parse(Session["balance"].ToString()) > (decimal.Parse(AmountOfMoney.Text.ToString().Replace('.', ',').Trim()) + fee)) return true;
                     else return false;
                 }
 

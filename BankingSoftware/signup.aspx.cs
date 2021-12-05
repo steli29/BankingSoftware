@@ -41,7 +41,6 @@ namespace BankingSoftware
                     Response.Write("<script>alert('Pin code is incorrect!');</script>");
             }
         }
-
         void SignUp()
         {
             try
@@ -66,7 +65,7 @@ namespace BankingSoftware
                 cmd.Parameters.AddWithValue("@address", address);
                 cmd.ExecuteNonQuery();
                 con.Close();
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "alert",
+                ScriptManager.RegisterStartupScript(this, GetType(), "alert",
                         "alert('Sign up Successfully!');window.location ='signin.aspx';", true);
             }
             catch (Exception ex)
@@ -107,16 +106,8 @@ namespace BankingSoftware
 
                 SqlCommand cmd = new SqlCommand("SELECT * FROM users_tbl WHERE user_id='" + Uname.Text.Trim() + 
                     "' OR email = '" + Email.Text.Trim() + "'OR number = '" + PNumber.Text.Trim() + "';", con);
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-
-                if (dt.Rows.Count >= 1)
-                    return false;
-                else
-                    return true;
-
-
+                SqlDataReader reader = cmd.ExecuteReader();
+                return !reader.Read();
             }
             catch (Exception ex)
             {

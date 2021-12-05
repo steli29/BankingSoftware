@@ -25,17 +25,14 @@ namespace BankingSoftware
                 }
                 SqlCommand cmd = new SqlCommand("SELECT * FROM  users_tbl WHERE (user_id='" +Username.Text.Trim() + "'OR email='"+ Username.Text.Trim()+"') AND password='" + Password.Text.Trim() +"';", con);
                 SqlDataReader reader = cmd.ExecuteReader();
-                if (reader.HasRows)
+                if (reader.Read())
                 {
-                    while (reader.Read())
-                    {
-                        Session["user_id"] = reader.GetValue(0).ToString();
-                        Session["name"] = reader.GetValue(1).ToString();
-                        Session["balance"] = reader.GetValue(7).ToString();
-                        ScriptManager.RegisterStartupScript(this, this.GetType(), "alert",
-                            "alert('Welcome, " + reader.GetValue(1).ToString() + "!');window.location ='viewBalance.aspx';", true);
-                    }
-                    
+                    Session["user_id"] = reader.GetValue(0).ToString();
+                    Session["name"] = reader.GetValue(1).ToString();
+                    Session["balance"] = reader.GetValue(7).ToString();
+                    ScriptManager.RegisterStartupScript(this, GetType(), "alert",
+                        "alert('Welcome, " + reader.GetValue(1).ToString() + "!');window.location ='viewBalance.aspx';", true);
+                    con.Close();
                 }
                 else
                 {

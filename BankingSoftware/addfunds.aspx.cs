@@ -16,36 +16,22 @@ namespace BankingSoftware
 
         }
 
-
-
-
         protected void AddFunds_Click(object sender, EventArgs e)
         {
 
-            if (string.IsNullOrEmpty(Card.Text) || string.IsNullOrEmpty(CVV.Text) || string.IsNullOrEmpty(Cash.Text) || string.IsNullOrEmpty(DueDate.Text))
-            {
+            if (string.IsNullOrEmpty(Card.Text) || string.IsNullOrEmpty(CVV.Text) || 
+                string.IsNullOrEmpty(Cash.Text) || string.IsNullOrEmpty(DueDate.Text))
                 Response.Write("<script>alert('Please fill in all fields!');</script>");
-            }
             else if (Card.Text.Length != 16)
-            {
                 Response.Write("<script>alert('Card numbers needs to be 16!');</script>");
-            }
-            else if(checkduedate())
-            {
+            else if(!checkduedate())
                 Response.Write("<script>alert('Card is expired');</script>");
-            }
             else if (CVV.Text.Length != 3)
-            {
                 Response.Write("<script>alert('CVV needs to be numbers 3!');</script>");
-            }
             else if (!decimal.TryParse(Cash.Text.Replace('.', ',').Trim(), out decimal result))
-            {
                 Response.Write("<script>alert('Invalid input');</script>");
-            }
             else
-            {
                 Funds();
-            }
         }
 
         void Funds()
@@ -76,7 +62,7 @@ namespace BankingSoftware
                     + "'WHERE user_id = '" + Session["user_id"].ToString() +"'", con);
                 cmd.ExecuteNonQuery();
                 con.Close();
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "alert",
+                ScriptManager.RegisterStartupScript(this, GetType(), "alert",
                             "alert('Added Funds Successful!');window.location ='viewBalance.aspx';", true);
             }
             catch (Exception ex)
@@ -85,21 +71,13 @@ namespace BankingSoftware
             }
         }
 
-
         bool checkduedate()
         {
             try
             {
                 DateTime date = DateTime.Now;
                 DateTime duedate = DateTime.Parse(DueDate.Text + "-01");
-                if (duedate.Year > date.Year || duedate.Month >= date.Month)
-                {
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
+                return duedate.Year > date.Year || duedate.Month >= date.Month;
              
             }
             catch (Exception ex)

@@ -89,14 +89,8 @@ namespace BankingSoftware
                     con.Open();
                 }
                 SqlCommand cmd = new SqlCommand("SELECT * FROM users_tbl WHERE email = '" + Email.Text.Trim() + "';", con);
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-
-                if (dt.Rows.Count >= 1)
-                    return true;
-                else
-                    return false;
+                SqlDataReader reader = cmd.ExecuteReader();
+                return reader.Read();
             }
             catch (Exception ex)
             {
@@ -116,28 +110,20 @@ namespace BankingSoftware
                 }
                 SqlCommand cmd = new SqlCommand("SELECT * FROM users_tbl WHERE email = '" + emailcheck + "'", con);
                 SqlDataReader reader = cmd.ExecuteReader();
-                if (reader.HasRows)
+                if (reader.Read())
                 {
-                    while (reader.Read())
+                    if (Npass.Text != reader.GetValue(5).ToString())
                     {
-                        if (Npass.Text != reader.GetValue(5).ToString())
-                        {
-                            con.Close();
-                            con.Open();
-                            cmd = new SqlCommand("UPDATE users_tbl SET password = '"
-                                + Npass.Text.Trim() + "' WHERE email = '" + emailcheck + "'", con);
-                            cmd.ExecuteNonQuery();
-                            ScriptManager.RegisterStartupScript(this, GetType(), "alert",
-                                "alert('Password Changed!');window.location ='signin.aspx';", true);
-                            break;
-                        }
-                        else
-                            Response.Write("<script>alert('New password cannot be the same as the old password');</script>");
+                        con.Close();
+                        con.Open();
+                        cmd = new SqlCommand("UPDATE users_tbl SET password = '"
+                            + Npass.Text.Trim() + "' WHERE email = '" + emailcheck + "'", con);
+                        cmd.ExecuteNonQuery();
+                        ScriptManager.RegisterStartupScript(this, GetType(), "alert",
+                            "alert('Password Changed!');window.location ='signin.aspx';", true);
                     }
-                }
-                else
-                {
-                    Response.Write("<script>alert('Username/email or password dont match!');</script>");
+                    else
+                        Response.Write("<script>alert('New password cannot be the same as the old password');</script>");
                 }
                 con.Close();
             }
