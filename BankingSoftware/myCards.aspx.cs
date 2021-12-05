@@ -3,12 +3,14 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Web.UI;
+using System.Windows;
 
 namespace BankingSoftware
 {
     public partial class WebForm3 : System.Web.UI.Page
-    {  
+    {
         string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
+        static string Prompt = "A";
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
@@ -54,7 +56,7 @@ namespace BankingSoftware
             {
                 con.Open();
             }
-            
+
             SqlCommand cmd = new SqlCommand("INSERT INTO cards_tbl (card_id, user_id, expirationDate, pinCode, securityCode) " +
                         "values(@card_id, @user_id, @expirationDate, @pinCode, @securityCode)", con);
             cmd.Parameters.AddWithValue("@card_id", GenerateCardNumber());
@@ -96,7 +98,7 @@ namespace BankingSoftware
             DateTime expirationDate = now.AddYears(4);
             var month = expirationDate.Month.ToString();
             var year = expirationDate.Year.ToString();
-            if(month.Length == 1)
+            if (month.Length == 1)
             {
                 month = "0" + month;
             }
@@ -105,13 +107,54 @@ namespace BankingSoftware
 
         protected void ShowCodes_Click(object sender, EventArgs e)
         {
-            Control pin = FindControl("#ctl00_ContentPlaceHolderMain_Pin");
-            Control sec = FindControl("#ctl00_ContentPlaceHolderMain_Sec");
+            getPassword();
+            var isMatching = checkIsMatching();
 
+            if (isMatching == true)
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert("+Prompt+");", true);
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert(" + Prompt + ");", true);
 
-            pin.Visible = true;
-            sec.Visible = true;
+            }
+        }
 
+        void getPassword()
+        {
+            Prompt = "<script langauge='javascript'>"
+            + "var pmt = prompt('Please enter your password!');"
+            + "document.getElementById('TextBox1').value=pmt; //pmt has got the user input value"
+            + "</script>";
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "Prompt", Prompt);
+        }
+
+        bool checkIsMatching()
+        {
+            SqlConnection con = new SqlConnection(strcon);
+            if (con.State == ConnectionState.Closed)
+            {
+                con.Open();
+            }
+            SqlCommand cmd = new SqlCommand("SELECT * FROM  users_tbl WHERE user_id='" + Session["user_id"] + "';", con);
+
+            SqlDataReader dr = cmd.ExecuteReader();
+            if (dr.Read())
+            {
+                if (dr.GetValue(5).ToString() == Prompt)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

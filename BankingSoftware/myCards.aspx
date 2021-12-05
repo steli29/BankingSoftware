@@ -12,6 +12,11 @@
                 pin.style.display = 'none';
                 sec.style.display = 'none';
             }
+
+            let name = '<%= Session["user_id"]%>';
+            let password = '<%= Session["pass"]%>';
+
+            alert(name + '' + password);
         }
     </script>
 </asp:Content>
@@ -36,9 +41,9 @@
                 <h4>Visa</h4>
             </div>
             <div class="lower">
-                <asp:Button ID="ShowCodes" runat="server" OnClick="ShowCodes_Click"/>
-                <h5><%#Eval("name")%><h5 runat="server" id="Sec" visible="false">Security:<%#Eval("securityCode") %></h5></h5><span><%#Eval("card_id")%></span>
-                <h6><%#Eval("expirationDate") %><h5 runat="server" id="Pin" visible="false">Pin:<%#Eval("pinCode") %></h5></h6>
+                <asp:Button ID="ShowCodes" runat="server" OnClick="ShowCodes_Click" Text="Show Pin and Security"/>
+                <h5><%#Eval("name")%><span id="SEC" style="display: none;">Security:<%#Eval("securityCode") %></span></h5><span><%#Eval("card_id")%></span>
+                <h6><%#Eval("expirationDate") %><span id="PIN" style="display: none;">Pin:<%#Eval("pinCode") %></span></h6>
             </div>
         </div>
     </ItemTemplate>

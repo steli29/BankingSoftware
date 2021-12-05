@@ -93,7 +93,7 @@
     color: #fff;
 }
 
-.lower #PIN {
+.lower #Pin{
     font-size: 20px;
     position: absolute;
     left: 250px;
@@ -101,7 +101,7 @@
     z-index: 1;
 }
 
-.lower #SEC {
+.lower #Sec {
     font-size: 20px;
     position: absolute;
     left: 250px;
