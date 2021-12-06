@@ -14,7 +14,6 @@ namespace BankingSoftware
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
         }
 
         protected void Signup_Click(object sender, EventArgs e)

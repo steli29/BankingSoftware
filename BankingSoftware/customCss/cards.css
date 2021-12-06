@@ -42,21 +42,21 @@
         opacity: 0.8
     }
 
-    .card::after {
-        box-sizing: initial;
-        height: 100%;
-        width: 100%;
-        position: absolute;
-        content: "";
-        bottom: 0;
-        top: 0;
-        right: 0;
-        left: 0;
-        border-radius: 14px;
-        background: rgb(63, 94, 251);
-        background: linear-gradient(90deg, rgba(63, 94, 251, 1) 0%, rgba(240, 50, 89, 1) 100%);
-        clip-path: polygon(28% 13%, 48% 45%, 75% 63%, 100% 99%, 0 100%, 0% 60%, 0 0)
-    }
+.card::after {
+    box-sizing: initial;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    content: "";
+    bottom: 0;
+    top: 0;
+    right: 0;
+    left: 0;
+    border-radius: 14px;
+    background: rgb(63, 94, 251);
+    background: linear-gradient(90deg, rgba(63, 94, 251, 1) 0%, rgba(240, 50, 89, 1) 100%);
+    clip-path: polygon(28% 13%, 48% 45%, 75% 63%, 100% 99%, 0 100%, 0% 60%, 0 0)
+}
 
 .upper {
     display: flex;

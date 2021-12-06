@@ -10,8 +10,13 @@ namespace BankingSoftware
     public partial class WebForm3 : System.Web.UI.Page
     {
         string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
+        int rowsLength = default;
         protected void Page_Load(object sender, EventArgs e)
         {
+            if(Session["user_id"] == null)
+            {
+                Response.Redirect("signin.aspx");
+            }
             if (!Page.IsPostBack)
             {
                 try
@@ -29,7 +34,8 @@ namespace BankingSoftware
                     da = new SqlDataAdapter(cmd);
                     da.Fill(ds);
                     if (ds.Tables.Count > 0)
-                    {
+                    {   
+                        rowsLength = ds.Tables[0].Rows.Count;
                         if (ds.Tables[0].Rows.Count >= 2)
                         {
                             RequestCard.Visible = false;
@@ -50,24 +56,31 @@ namespace BankingSoftware
 
         protected void RequestCard_Click(object sender, EventArgs e)
         {
-
-            SqlConnection con = new SqlConnection(strcon);
-            if (con.State == ConnectionState.Closed)
+            if (rowsLength < 2)
             {
-                con.Open();
-            }
+                SqlConnection con = new SqlConnection(strcon);
+                if (con.State == ConnectionState.Closed)
+                {
+                    con.Open();
+                }
 
-            SqlCommand cmd = new SqlCommand("INSERT INTO cards_tbl (card_id, user_id, expirationDate, pinCode, securityCode) " +
-                        "values(@card_id, @user_id, @expirationDate, @pinCode, @securityCode)", con);
-            cmd.Parameters.AddWithValue("@card_id", GenerateCardNumber());
-            cmd.Parameters.AddWithValue("@user_id", Session["user_id"]);
-            cmd.Parameters.AddWithValue("@expirationDate", GenerateDate());
-            cmd.Parameters.AddWithValue("@pinCode", GeneratePin());
-            cmd.Parameters.AddWithValue("@securityCode", GenerateSecurity());
-            cmd.ExecuteNonQuery();
-            con.Close();
-            Response.Write("<script>alert('card is made');</script>");
-            Response.Redirect("myCards.aspx");
+                SqlCommand cmd = new SqlCommand("INSERT INTO cards_tbl (card_id, user_id, expirationDate, pinCode, securityCode) " +
+                            "values(@card_id, @user_id, @expirationDate, @pinCode, @securityCode)", con);
+                cmd.Parameters.AddWithValue("@card_id", GenerateCardNumber());
+                cmd.Parameters.AddWithValue("@user_id", Session["user_id"]);
+                cmd.Parameters.AddWithValue("@expirationDate", GenerateDate());
+                cmd.Parameters.AddWithValue("@pinCode", GeneratePin());
+                cmd.Parameters.AddWithValue("@securityCode", GenerateSecurity());
+                cmd.ExecuteNonQuery();
+                con.Close();
+                Response.Write("<script>alert('New card is made');</script>");
+                Response.Redirect("myCards.aspx");
+            }
+            else
+            {
+                Response.Write("<script>alert('You cant make more than two cards!');</script>");
+
+            }
         }
 
         int GeneratePin()

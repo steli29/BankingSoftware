@@ -17,6 +17,11 @@ namespace BankingSoftware
         {
             LoanWithdraw();
 
+            if (Session["user_id"] == null)
+            {
+                Response.Redirect("signin.aspx");
+            }
+            Session["pass"] = null;
             try
             {
                 SqlConnection con = new SqlConnection(strcon);

@@ -16,6 +16,11 @@ namespace BankingSoftware
             {
                 if(Session["user_id"] != null)
                 {
+                    Session["user_id"] = null;
+                    Session["balance"] = null;
+                    Session["pass"] = null;
+                    Session["name"] = null;
+
                     signin.Visible = false;
                     signup.Visible = false;
                     Logout.Visible = true;
