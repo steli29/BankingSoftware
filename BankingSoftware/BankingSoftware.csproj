@@ -68,7 +68,11 @@
   <ItemGroup>
     <Content Include="bootstrap\bootstrap.min.css" />
     <Content Include="customCss\cards.css" />
+    <Content Include="customCss\homepage.css" />
     <Content Include="customCss\StyleSheet1.css" />
+    <Content Include="imgs\img1.jpg" />
+    <Content Include="imgs\img2.jpg" />
+    <Content Include="imgs\img3.jpg" />
     <Content Include="imgs\picture.jpg" />
     <Content Include="imgs\banner.jpg" />
     <Content Include="imgs\logo.png" />
