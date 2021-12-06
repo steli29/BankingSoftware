@@ -47,18 +47,18 @@ namespace BankingSoftware
                 string _Cash = Cash.Text.Replace('.', ',').Trim();
                 decimal new_balance = decimal.Parse(Session["balance"].ToString()) + decimal.Parse(_Cash);
                 DateTime date = DateTime.Today;
-                SqlCommand cmd = new SqlCommand("INSERT INTO balance_tbl (user_id, new_balance, date, transaction_amount, info)" +
-                    " values(@user_id, @new_balance, @date, @transaction_amount, @info)", con);
+                SqlCommand cmd = new SqlCommand("INSERT INTO balance_tbl (user_id, new_balance, date, transaction_amount, info, type)" +
+                    " values(@user_id, @new_balance, @date, @transaction_amount, @info, @type)", con);
                 cmd.Parameters.AddWithValue("@user_id", Session["user_id"].ToString());
                 cmd.Parameters.AddWithValue("@new_balance", new_balance);
                 cmd.Parameters.AddWithValue("@date", date);
                 cmd.Parameters.AddWithValue("@transaction_amount", decimal.Parse(_Cash));
                 cmd.Parameters.AddWithValue("@info", "Added from another card");
+                cmd.Parameters.AddWithValue("@type", "Income");
                 cmd.ExecuteNonQuery();
                 Session["balance"] = new_balance;
 
-                _Cash = new_balance.ToString();
-                cmd = new SqlCommand("UPDATE users_tbl SET balance = '" + _Cash.Replace(',', '.').Trim() 
+                cmd = new SqlCommand("UPDATE users_tbl SET balance = '" + new_balance.ToString().Replace(',', '.').Trim() 
                     + "'WHERE user_id = '" + Session["user_id"].ToString() +"'", con);
                 cmd.ExecuteNonQuery();
                 con.Close();

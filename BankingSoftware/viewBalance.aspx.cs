@@ -15,6 +15,8 @@ namespace BankingSoftware
         string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
         protected void Page_Load(object sender, EventArgs e)
         {
+            LoanWithdraw();
+
             try
             {
                 SqlConnection con = new SqlConnection(strcon);
@@ -106,6 +108,76 @@ namespace BankingSoftware
             Transaction.DataBind();
         }
 
+        void LoanWithdraw()
+        {
+            SqlConnection con = new SqlConnection(strcon);
+            if (con.State == ConnectionState.Closed)
+            {
+                con.Open();
+            }
+            DateTime dateTime = DateTime.Today;
+            List<string> Loan = new List<string>();
+            SqlCommand cmd = new SqlCommand("SELECT * FROM balance_tbl WHERE user_id = '" + Session["user_id"] + "' AND type = 'Loan'", con);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                for (int i = 0; i < reader.FieldCount; i++)
+                    Loan.Add(reader[i].ToString());
+                reader.Close();
 
+                int alreadywithdraw = default;
+                alreadyWithdraw(alreadywithdraw);
+                int monthsadded = 1 + alreadywithdraw;
+                decimal fee = decimal.Parse(Loan[4]) / 12 + decimal.Parse(Loan[4]) / 240;
+                while (DateTime.Parse(Loan[3]).AddMonths(monthsadded) <= dateTime || DateTime.Parse(Loan[3]).AddYears(1) >= dateTime)
+                {
+                    decimal new_balance = decimal.Parse(Session["balance"].ToString()) - fee;
+                    Session["balance"] = new_balance;
+                    cmd = new SqlCommand("INSERT INTO balance_tbl (user_id, new_balance, date, transaction_amount, info, type)" +
+                    " values(@user_id, @new_balance, @date, @transaction_amount, @info, @type)", con);
+                    cmd.Parameters.AddWithValue("@user_id", Session["user_id"]);
+                    cmd.Parameters.AddWithValue("@new_balance", new_balance);
+                    cmd.Parameters.AddWithValue("@date", DateTime.Parse(Loan[3]).AddMonths(monthsadded));
+                    cmd.Parameters.AddWithValue("@transaction_amount", fee * -1);
+                    cmd.Parameters.AddWithValue("@info", "Monthly withdraw for loan");
+                    cmd.Parameters.AddWithValue("@type", "WithDraw Loan");
+                    cmd.ExecuteNonQuery();
+                    monthsadded++;
+                    cmd = new SqlCommand("UPDATE users_tbl SET balance = '" + new_balance.ToString().Replace(',', '.').Trim()
+                    + "'WHERE user_id = '" + Session["user_id"] + "'", con);
+                    cmd.ExecuteNonQuery();
+                }
+                if (DateTime.Parse(Loan[3]).AddYears(1) < dateTime)
+                    EndLoan();
+            }
+            con.Close();
+        }
+
+        int alreadyWithdraw(int alreadywithdraw)
+        {
+            SqlConnection con = new SqlConnection(strcon);
+            if (con.State == ConnectionState.Closed)
+            {
+                con.Open();
+            }
+            SqlCommand cmd = new SqlCommand("SELECT * FROM balance_tbl WHERE user_id = '" + Session["user_id"] + "' AND type = 'WithDraw Loan'", con);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+                return reader.FieldCount;
+            else
+                return 0;
+        }
+
+        void EndLoan()
+        {
+            SqlConnection con = new SqlConnection(strcon);
+            if (con.State == ConnectionState.Closed)
+            {
+                con.Open();
+            }
+            SqlCommand cmd = new SqlCommand("UPDATE balance_tbl SET type = 'LoanEnd' WHERE user_id='" + Session["user_id"] + "' AND type = 'Loan' OR type = 'WithDraw Loan'", con);
+            cmd.ExecuteNonQuery();
+            con.Close();
+        }
     }
 }

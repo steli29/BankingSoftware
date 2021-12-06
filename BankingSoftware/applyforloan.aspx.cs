@@ -16,7 +16,7 @@ namespace BankingSoftware
 
         protected void SubmitLoan_Click(object sender, EventArgs e)
         {
-            string LoanType = DropDownList1.SelectedValue;
+            string LoanType = Loans.SelectedValue;
             string Name = FullName.Text.ToString();
             decimal MonthlyIncome = decimal.Parse(NMI.Text.ToString());
             decimal AmountNeeded = decimal.Parse(MoneyLoan.Text.ToString());
@@ -40,46 +40,46 @@ namespace BankingSoftware
                 percent = 0.09m;
             }
             decimal MoneyToPayForSixMonths = percent * AmountNeeded;
-            if (MoneyToPayForSixMonths > SixMonthsPayment)
-            {
-                Response.Write("<script>alert('No');</script>");
-            }
+            if (MoneyToPayForSixMonths < SixMonthsPayment)
+                Loan();
             else
+                Response.Write("<script>alert('Loan Rejected!');</script>");
+
+        }
+        void Loan()
+        {
+            try
             {
-                try
+                SqlConnection con = new SqlConnection(strcon);
+                if (con.State == ConnectionState.Closed)
                 {
-                    SqlConnection con = new SqlConnection(strcon);
-                    if (con.State == ConnectionState.Closed)
-                    {
-                        con.Open();
-                    }
-                    string _Cash = MoneyLoan.Text.Replace('.', ',').Trim();
-                    decimal newBalance = decimal.Parse(Session["balance"].ToString()) + decimal.Parse(_Cash);
-                    DateTime date = DateTime.Today;
-                    SqlCommand cmd = new SqlCommand("INSERT INTO balance_tbl (user_id, new_balance, date, transaction_amount, info)" +
-                        " values(@user_id, @new_balance, @date, @transaction_amount, @info)", con);
-                    cmd.Parameters.AddWithValue("@user_id", Session["user_id"].ToString());
-                    cmd.Parameters.AddWithValue("@new_balance", newBalance);
-                    cmd.Parameters.AddWithValue("@date", date);
-                    cmd.Parameters.AddWithValue("@transaction_amount", decimal.Parse(_Cash));
-                    cmd.Parameters.AddWithValue("@info", "Cerdit transaction amount - "+AmountNeeded.ToString());
-                    cmd.ExecuteNonQuery();
-                    Session["balance"] = newBalance;
-
-                    _Cash = newBalance.ToString();
-                    cmd = new SqlCommand("UPDATE users_tbl SET balance = '" + _Cash.Replace(',', '.').Trim()
-                        + "'WHERE user_id = '" + Session["user_id"].ToString() + "'", con);
-                    cmd.ExecuteNonQuery();
-                    con.Close();
+                    con.Open();
                 }
-                catch(Exception ex)
-                {
+                string _Cash = MoneyLoan.Text.Replace('.', ',').Trim();
+                decimal newBalance = decimal.Parse(Session["balance"].ToString()) + decimal.Parse(_Cash);
+                DateTime date = DateTime.Today;
+                SqlCommand cmd = new SqlCommand("INSERT INTO balance_tbl (user_id, new_balance, date, transaction_amount, info, type)" +
+                    " values(@user_id, @new_balance, @date, @transaction_amount, @info, @type)", con);
+                cmd.Parameters.AddWithValue("@user_id", Session["user_id"].ToString());
+                cmd.Parameters.AddWithValue("@new_balance", newBalance);
+                cmd.Parameters.AddWithValue("@date", date);
+                cmd.Parameters.AddWithValue("@transaction_amount", decimal.Parse(_Cash));
+                cmd.Parameters.AddWithValue("@info", "Approved for credit '"+ Loans.Text + "'") ;
+                cmd.Parameters.AddWithValue("@type","Loan");
+                cmd.ExecuteNonQuery();
+                Session["balance"] = newBalance;
 
-                }
-                Response.Redirect("viewBalance.aspx");
-
+                cmd = new SqlCommand("UPDATE users_tbl SET balance = '" + newBalance.ToString().Replace(',', '.').Trim()
+                    + "'WHERE user_id = '" + Session["user_id"].ToString() + "'", con);
+                cmd.ExecuteNonQuery();
+                con.Close();
+                ScriptManager.RegisterStartupScript(this, GetType(), "alert",
+                            "alert('Loan Approved!');window.location ='viewBalance.aspx';", true);
             }
-
+            catch (Exception ex)
+            {
+                Response.Write("<script>alert('" + ex.Message + "');</script>");
+            }
         }
     }
 }
