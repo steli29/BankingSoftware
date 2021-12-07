@@ -33,6 +33,15 @@ namespace BankingSoftware
         protected global::System.Web.UI.HtmlControls.HtmlForm form2;
 
         /// <summary>
+        /// Homepage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton Homepage;
+
+        /// <summary>
         /// ViewBalance control.
         /// </summary>
         /// <remarks>
@@ -94,6 +103,15 @@ namespace BankingSoftware
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton signup;
+
+        /// <summary>
+        /// HelloUser control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton HelloUser;
 
         /// <summary>
         /// Logout control.

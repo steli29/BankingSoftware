@@ -28,7 +28,10 @@
 
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item active">
-                        <asp:LinkButton CssClass="nav-link" ID="ViewBalance" Visible="true" runat="server" href="viewBalance.aspx">View Balance</asp:LinkButton>
+                        <asp:LinkButton CssClass="nav-link" ID="Homepage" Visible="true" runat="server" href="homepage.aspx">Home</asp:LinkButton>
+                    </li>
+                    <li class="nav-item active">
+                        <asp:LinkButton CssClass="nav-link" ID="ViewBalance" Visible="false" runat="server" href="viewBalance.aspx">View Balance</asp:LinkButton>
                     </li>
                     <li class="nav-item active">
                         <asp:LinkButton CssClass="nav-link" ID="MyCard" runat="server" Visible="false" href="myCards.aspx">My Cards</asp:LinkButton>
@@ -50,6 +53,9 @@
                     <li class="nav-item active">
                         <asp:LinkButton CssClass="nav-link"  runat="server" href="signup.aspx" ID="signup">Sign up</asp:LinkButton>
                     </li>
+                    <li class="nav-item active">
+                        <asp:LinkButton CssClass="nav-link"  runat="server" Visible="false" ID="HelloUser">Hello user</asp:LinkButton>
+                    </li>
                      <li class="nav-item active">
                         <asp:LinkButton CssClass="nav-link"  runat="server" OnClick="Logout_Click" Visible="false" ID="Logout">Logout</asp:LinkButton>
                     </li>
@@ -63,8 +69,11 @@
         </div>
 
         <footer class="container-fluid bg-info">
-            <div class="footer-copyright text-center py-3">&copy 2021 Copyright:
+            <div class="footer-copyright text-center py-1">&copy 2021 Copyright:
                 <a href="homepage.aspx"> BankSoftware</a>
+            </div>
+            <div class="footer-copyright text-center py-1"> Contact us here:
+                <a href="mailto:bankingsoftware5@gmail.com"> bankingsoftware5@gmail.com</a>
             </div>
         </footer>
 

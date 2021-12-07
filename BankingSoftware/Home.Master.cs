@@ -11,6 +11,9 @@ namespace BankingSoftware
             {
                 if (Session["user_id"] != null)
                 {
+                    Homepage.Visible = false;
+                    HelloUser.Visible = true;
+                    HelloUser.Text = "Hello, " + Session["name"];
                     ViewBalance.Visible = true;
                     AddFunds.Visible = true;
                     MoneyTrans.Visible = true;
@@ -33,6 +36,7 @@ namespace BankingSoftware
             Session["name"] = null;
             Session["balance"] = null;
             Session["pass"] = null;
+            Homepage.Visible = true;
             ViewBalance.Visible = false;
             AddFunds.Visible = false;
             MoneyTrans.Visible = false;
@@ -41,6 +45,7 @@ namespace BankingSoftware
             signin.Visible = true;
             signup.Visible = true;
             Logout.Visible = false;
+            HelloUser.Visible = false;
             Response.Redirect("homepage.aspx");
         }
     }

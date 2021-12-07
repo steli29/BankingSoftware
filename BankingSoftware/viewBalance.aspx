@@ -49,5 +49,8 @@
       </asp:Repeater>
   </tbody>
 </table>
+    <asp:Button ID="Left" Visible="false" class="btn" runat="server" Text="&#8249;" OnCLick="Left_Click"/>
+    <asp:Label ID="Pagenumber" class="btn" runat="server" Text="1"></asp:Label>
+    <asp:Button ID="Right" Visible="false" class="btn" runat="server" Text="&#8250;" OnCLick="Right_Click"/>
 </div>
 </asp:Content>
