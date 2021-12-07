@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace BankingSoftware
 {
-    public partial class signup : System.Web.UI.Page
+    public partial class signup : Page
     {
         string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
 
@@ -52,7 +52,6 @@ namespace BankingSoftware
 
                 string name = Name.Text.Trim() + " " + Surname.Text.Trim();
                 string address = Country.Text + " " + State.Text + " " + City.Text + " " + Pin.Text.Trim() + " " + FAdress.Text;
-
                 SqlCommand cmd = new SqlCommand("INSERT INTO users_tbl (user_id, name, email, number, dob, password, address, balance) " +
                     "values(@user_id, @name, @email, @number, @dob, @password, @address,"+ 0 +" )",con);
                 cmd.Parameters.AddWithValue("@user_id", Uname.Text.Trim());
@@ -75,16 +74,12 @@ namespace BankingSoftware
 
         bool checkTextBox()
         {
-
             try
             {
-                if (Name.Text != string.Empty && Surname.Text != string.Empty && Uname.Text != string.Empty
-                    && Email.Text != string.Empty && PNumber.Text != string.Empty && DoB.Text != string.Empty
-                    && Pswrd.Text != string.Empty && CPswrd.Text != string.Empty && State.Text != string.Empty
-                    && City.Text != string.Empty && Pin.Text != string.Empty && FAdress.Text != string.Empty)
-                    return true;
-                else
-                    return false;
+                return (Name.Text.Trim() != string.Empty && Surname.Text.Trim() != string.Empty && Uname.Text.Trim() != string.Empty
+                    && Email.Text.Trim() != string.Empty && PNumber.Text.Trim() != string.Empty && DoB.Text.Trim() != string.Empty
+                    && Pswrd.Text.Trim() != string.Empty && CPswrd.Text.Trim() != string.Empty && State.Text != string.Empty
+                    && City.Text != string.Empty && Pin.Text.Trim() != string.Empty && FAdress.Text != string.Empty);
             }
             catch (Exception ex)
             {
@@ -118,10 +113,7 @@ namespace BankingSoftware
         {
             try
             {
-                if (PNumber.Text.Length == 10 && !Regex.IsMatch(PNumber.Text.Trim(), "[^0-9]"))
-                    return true;
-                else
-                    return false;
+                return PNumber.Text.Length == 10 && !Regex.IsMatch(PNumber.Text.Trim(), "[^0-9]");
             }
             catch (Exception ex)
             {
@@ -137,14 +129,10 @@ namespace BankingSoftware
                 DateTime date = DateTime.Now.Date;
                 DateTime dateofbirth = DateTime.Parse(DoB.Text);
                 TimeSpan d = date.Subtract(dateofbirth);
-                if (d.Days >= 6575)
-                    return true;
-                else
-                    return false;
+                return (d.Days >= 6575);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                //Response.Write("<script>alert('" + ex.Message + "');</script>");
                 return false;
             }
         }
@@ -162,12 +150,7 @@ namespace BankingSoftware
                     if (uppercase)
                         break;
                 }
-                if (length && anynumber && uppercase)
-                    return true;
-                else
-                    return false;
-
-
+                return (length && anynumber && uppercase);
             }
             catch (Exception ex)
             {
@@ -180,10 +163,7 @@ namespace BankingSoftware
         {
             try
             {
-                if (Pin.Text.Length == 4)
-                    return true;
-                else
-                    return false;
+                return (Pin.Text.Length == 4) ;
             }
             catch (Exception ex)
             {

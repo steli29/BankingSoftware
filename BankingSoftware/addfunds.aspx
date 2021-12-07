@@ -33,7 +33,7 @@
                 <div class="col-md-4">
                     <label>CVC</label>
                     <div class="form-group">
-                        <asp:TextBox CssClass="form-control" ID="CVV" runat="server" placeholder="CVC" TextMode="Number"></asp:TextBox>
+                        <asp:TextBox CssClass="form-control" ID="CVC" runat="server" placeholder="CVC" TextMode="Number"></asp:TextBox>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -44,13 +44,13 @@
                 </div>
             </div>
 
-                <div class="form-group">
-                    <center>
-                        <asp:Button ID="AddFunds" runat="server" CssClass="btn btn-secondary col-10 mt-5 " Text="Submit" OnClick="AddFunds_Click"/>
-                    </center>
+            <div class="form-group">
+                <center>
+                    <asp:Button ID="AddFunds" runat="server" CssClass="btn btn-secondary col-10 mt-5 " Text="Submit" OnClick="AddFunds_Click"/>
+                </center>
             </div>
         </div>
-        <a href="homepage.aspx"><< Back to Home</a><br><br>
+        <a href="viewBalance.aspx"><< Back to Main</a><br><br>
     </div>
 
 </asp:Content>

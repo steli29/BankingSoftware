@@ -1,26 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text.RegularExpressions;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace BankingSoftware
 {
-    public partial class WebForm7 : System.Web.UI.Page
+    public partial class WebForm7 : Page
     {
         string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
         static decimal fee = 0.30M;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["user_id"] == null)
-            {
                 Response.Redirect("signin.aspx");
-            }
             Session["pass"] = null;
         }
         protected void Transfer_Click(object sender, EventArgs e)
@@ -56,22 +50,20 @@ namespace BankingSoftware
                 }
 
                 string cash = AmountOfMoney.Text.Replace('.', ',').Trim();
-                SqlCommand cmd = new SqlCommand("SELECT * FROM users_tbl WHERE user_id='" + ReceiverID.Text + "';", con);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM users_tbl WHERE user_id='" + ReceiverID.Text.Trim() + "';", con);
                 SqlDataReader reader = cmd.ExecuteReader();
                 decimal balance = default;
 
                 if (reader.Read())
                     balance = (decimal)reader.GetValue(7);
 
-
                 decimal new_balance = balance + decimal.Parse(cash);
                 reader.Close();
 
                 DateTime date = DateTime.Today;
-
                 cmd = new SqlCommand("INSERT INTO balance_tbl (user_id, new_balance, date, transaction_amount, info)" +
                     " values(@user_id, @new_balance, @date, @transaction_amount, @info)", con);
-                cmd.Parameters.AddWithValue("@user_id", ReceiverID.Text);
+                cmd.Parameters.AddWithValue("@user_id", ReceiverID.Text.Trim());
                 cmd.Parameters.AddWithValue("@new_balance", new_balance);
                 cmd.Parameters.AddWithValue("@date", date);
                 cmd.Parameters.AddWithValue("@transaction_amount", decimal.Parse(cash));
@@ -79,7 +71,7 @@ namespace BankingSoftware
                 cmd.ExecuteNonQuery();
 
                 cmd = new SqlCommand("UPDATE users_tbl SET balance = '" + new_balance.ToString().Replace(',', '.').Trim()
-                + "' WHERE user_id = '" + ReceiverID.Text + "'", con);
+                + "' WHERE user_id = '" + ReceiverID.Text.Trim() + "'", con);
                 cmd.ExecuteNonQuery();
 
                 new_balance = decimal.Parse(Session["balance"].ToString()) - (decimal.Parse(cash) + fee);
@@ -91,8 +83,8 @@ namespace BankingSoftware
 
                 cmd = new SqlCommand("INSERT INTO balance_tbl (user_id, new_balance, date, transaction_amount, info)" +
                     " values(@user_id, @new_balance, @date, @transaction_amount, @info)", con);
-                cmd.Parameters.AddWithValue("@user_id", Session["user_id"].ToString());
-                cmd.Parameters.AddWithValue("@new_balance", new_balance.ToString().Replace(',', '.').Trim());
+                cmd.Parameters.AddWithValue("@user_id", Session["user_id"]);
+                cmd.Parameters.AddWithValue("@new_balance", new_balance);
                 cmd.Parameters.AddWithValue("@date", date);
                 cmd.Parameters.AddWithValue("@transaction_amount", (decimal.Parse(cash) + fee) * -1);
                 cmd.Parameters.AddWithValue("@info", Reason.Text);
@@ -112,11 +104,8 @@ namespace BankingSoftware
         {
             try
             {
-                if (ReceiverID.Text != string.Empty && YourPassword.Text != string.Empty
-                    && AmountOfMoney.Text != string.Empty && Reason.Text != string.Empty)
-                    return true;
-                else
-                    return false;
+                return (ReceiverID.Text.Trim() != string.Empty && YourPassword.Text.Trim() != string.Empty
+                    && AmountOfMoney.Text.Trim() != string.Empty && Reason.Text != string.Empty);
             }
             catch (Exception ex)
             {
@@ -135,12 +124,10 @@ namespace BankingSoftware
                     con.Open();
                 }
 
-                SqlCommand cmd = new SqlCommand("SELECT * FROM users_tbl WHERE user_id='" + ReceiverID.Text + "';", con);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM users_tbl WHERE user_id='" + ReceiverID.Text.Trim() + "';", con);
                 SqlDataReader reader = cmd.ExecuteReader();
 
                 return reader.Read();
-
-                
             }
             catch (Exception ex)
             {
@@ -151,18 +138,24 @@ namespace BankingSoftware
         
         bool checkIsYourId()
         {
-            return Session["user_id"].ToString() != ReceiverID.Text.Trim();
+            try
+            {
+                return Session["user_id"].ToString() != ReceiverID.Text.Trim();
+            }
+            catch (Exception ex)
+            {
+                Response.Write("<script>alert('" + ex.Message + "');</script>");
+                return false;
+            }
+            
         }
 
         bool checkMoneyInput()
         {
             try
             {
-                if (decimal.TryParse(AmountOfMoney.Text.ToString().Replace('.', ',').Trim(), out decimal money) && 
-                    decimal.Parse(AmountOfMoney.Text.ToString().Replace('.', ',').Trim()) != 0)
-                    return true ;
-                else
-                    return false;
+                return (decimal.TryParse(AmountOfMoney.Text.ToString().Replace('.', ',').Trim(), out decimal money) &&
+                    decimal.Parse(AmountOfMoney.Text.ToString().Replace('.', ',').Trim()) != 0);
             }
             catch (Exception ex)
             {
@@ -176,11 +169,7 @@ namespace BankingSoftware
             try
             {
                 if (checkMoneyInput())
-                {
-                    if (decimal.Parse(Session["balance"].ToString()) > (decimal.Parse(AmountOfMoney.Text.ToString().Replace('.', ',').Trim()) + fee)) return true;
-                    else return false;
-                }
-
+                    return (decimal.Parse(Session["balance"].ToString()) > (decimal.Parse(AmountOfMoney.Text.ToString().Replace('.', ',').Trim()) + fee)) ;
                 else return false;
             }
 
@@ -201,11 +190,9 @@ namespace BankingSoftware
                     con.Open();
                 }
 
-                SqlCommand cmd = new SqlCommand("SELECT * FROM users_tbl WHERE user_id='" + Session["user_id"].ToString() + "' AND password='" + YourPassword.Text + "';", con);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM users_tbl WHERE user_id='" + Session["user_id"] + "' AND password='" + YourPassword.Text + "';", con);
                 SqlDataReader reader = cmd.ExecuteReader();
-                if (reader.Read()) { return true; }
-                else return false;
-                con.Close();
+                return reader.Read();
             }
             catch (Exception ex)
             {

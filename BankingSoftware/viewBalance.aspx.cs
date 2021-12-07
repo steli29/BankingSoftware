@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace BankingSoftware
 {
-    public partial class WebForm6 : System.Web.UI.Page
+    public partial class WebForm6 : Page
     {
         string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
         protected void Page_Load(object sender, EventArgs e)
@@ -18,9 +15,7 @@ namespace BankingSoftware
             LoanWithdraw();
 
             if (Session["user_id"] == null)
-            {
                 Response.Redirect("signin.aspx");
-            }
             Session["pass"] = null;
             try
             {
@@ -30,9 +25,7 @@ namespace BankingSoftware
                     con.Open();
                 }
                 SqlCommand cmd = new SqlCommand("SELECT * FROM  users_tbl  WHERE user_id='" + Session["user_id"] + "';", con);
-                //cmd.ExecuteReader();
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                //DataTable dt = new DataTable();
+                SqlDataAdapter da = new SqlDataAdapter(cmd);;
                 DataSet ds = new DataSet();
                 da = new SqlDataAdapter(cmd);
                 da.Fill(ds);
@@ -69,7 +62,6 @@ namespace BankingSoftware
             {
                 con.Open();
             }
-
             SqlCommand cmd = new SqlCommand("SELECT * FROM balance_tbl FULL OUTER JOIN users_tbl ON users_tbl.user_id = balance_tbl.user_id WHERE users_tbl.user_id='" + Session["user_id"] + "';", con);
             SqlDataAdapter db = new SqlDataAdapter(cmd);
             DataSet de = new DataSet();
@@ -77,6 +69,7 @@ namespace BankingSoftware
             db.Fill(de);
             Transaction.DataSource = de;
             Transaction.DataBind();
+            con.Close();
         }
 
         public void Income_Click(object sender, EventArgs e)
@@ -94,6 +87,7 @@ namespace BankingSoftware
             db.Fill(de);
             Transaction.DataSource = de;
             Transaction.DataBind();
+            con.Close();
         }
 
         public void Costs_Click(object sender, EventArgs e)
@@ -111,6 +105,7 @@ namespace BankingSoftware
             db.Fill(de);
             Transaction.DataSource = de;
             Transaction.DataBind();
+            con.Close();
         }
 
         void LoanWithdraw()
@@ -120,7 +115,7 @@ namespace BankingSoftware
             {
                 con.Open();
             }
-            DateTime dateTime = DateTime.Today;
+            DateTime dateTime = DateTime.Parse("2022-02-26");
             List<string> Loan = new List<string>();
             SqlCommand cmd = new SqlCommand("SELECT * FROM balance_tbl WHERE user_id = '" + Session["user_id"] + "' AND type = 'Loan'", con);
             SqlDataReader reader = cmd.ExecuteReader();
@@ -130,11 +125,9 @@ namespace BankingSoftware
                     Loan.Add(reader[i].ToString());
                 reader.Close();
 
-                int alreadywithdraw = default;
-                alreadyWithdraw(alreadywithdraw);
-                int monthsadded = 1 + alreadywithdraw;
+                int monthsadded = 1 + alreadyWithdraw();
                 decimal fee = decimal.Parse(Loan[4]) / 12 + decimal.Parse(Loan[4]) / 240;
-                while (DateTime.Parse(Loan[3]).AddMonths(monthsadded) <= dateTime || DateTime.Parse(Loan[3]).AddYears(1) >= dateTime)
+                while (DateTime.Parse(Loan[3]).AddMonths(monthsadded) <= dateTime && DateTime.Parse(Loan[3]).AddYears(1) >= dateTime)
                 {
                     decimal new_balance = decimal.Parse(Session["balance"].ToString()) - fee;
                     Session["balance"] = new_balance;
@@ -151,6 +144,7 @@ namespace BankingSoftware
                     cmd = new SqlCommand("UPDATE users_tbl SET balance = '" + new_balance.ToString().Replace(',', '.').Trim()
                     + "'WHERE user_id = '" + Session["user_id"] + "'", con);
                     cmd.ExecuteNonQuery();
+                    con.Close();
                 }
                 if (DateTime.Parse(Loan[3]).AddYears(1) < dateTime)
                     EndLoan();
@@ -158,7 +152,7 @@ namespace BankingSoftware
             con.Close();
         }
 
-        int alreadyWithdraw(int alreadywithdraw)
+        int alreadyWithdraw()
         {
             SqlConnection con = new SqlConnection(strcon);
             if (con.State == ConnectionState.Closed)
@@ -167,10 +161,12 @@ namespace BankingSoftware
             }
             SqlCommand cmd = new SqlCommand("SELECT * FROM balance_tbl WHERE user_id = '" + Session["user_id"] + "' AND type = 'WithDraw Loan'", con);
             SqlDataReader reader = cmd.ExecuteReader();
-            if (reader.Read())
-                return reader.FieldCount;
-            else
-                return 0;
+            int counter = 0;
+            while (reader.Read())
+            {
+                counter++;
+            }
+            return counter;
         }
 
         void EndLoan()

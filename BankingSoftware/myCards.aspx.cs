@@ -3,21 +3,18 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Web.UI;
-using System.Windows;
 
 namespace BankingSoftware
 {
-    public partial class WebForm3 : System.Web.UI.Page
+    public partial class WebForm3 : Page
     {
         string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
         int rowsLength = default;
         protected void Page_Load(object sender, EventArgs e)
         {
             if(Session["user_id"] == null)
-            {
                 Response.Redirect("signin.aspx");
-            }
-            if (!Page.IsPostBack)
+            else if (!Page.IsPostBack)
             {
                 try
                 {
@@ -27,9 +24,7 @@ namespace BankingSoftware
                         con.Open();
                     }
                     SqlCommand cmd = new SqlCommand("SELECT * FROM  cards_tbl FULL OUTER JOIN users_tbl ON cards_tbl.user_id = users_tbl.user_id WHERE cards_tbl.user_id='" + Session["user_id"] + "';", con);
-
                     SqlDataAdapter da = new SqlDataAdapter(cmd);
-                    //DataTable dt = new DataTable();
                     DataSet ds = new DataSet();
                     da = new SqlDataAdapter(cmd);
                     da.Fill(ds);
@@ -37,10 +32,7 @@ namespace BankingSoftware
                     {   
                         rowsLength = ds.Tables[0].Rows.Count;
                         if (ds.Tables[0].Rows.Count >= 2)
-                        {
                             RequestCard.Visible = false;
-
-                        }
                         CardRepeater.DataSource = ds;
                         CardRepeater.DataBind();
                     }
@@ -77,10 +69,7 @@ namespace BankingSoftware
                 Response.Redirect("myCards.aspx");
             }
             else
-            {
                 Response.Write("<script>alert('You cant make more than two cards!');</script>");
-
-            }
         }
 
         int GeneratePin()
@@ -112,29 +101,21 @@ namespace BankingSoftware
             var month = expirationDate.Month.ToString();
             var year = expirationDate.Year.ToString();
             if (month.Length == 1)
-            {
                 month = "0" + month;
-            }
             return month + "/" + year;
         }
 
         void ShowCodes()
         {
-            //ShowCodes.Attributes.Add("onclick", "return false;");
-
             SqlConnection con = new SqlConnection(strcon);
             if (con.State == ConnectionState.Closed)
             {
                 con.Open();
             }
             SqlCommand cmd = new SqlCommand("SELECT * FROM  users_tbl WHERE user_id='" + Session["user_id"] + "';", con);
-
             SqlDataReader dr = cmd.ExecuteReader();
             if (dr.Read())
-            {
                 Session["pass"] = dr.GetValue(5).ToString();
-            }
-
         }
     }
 }

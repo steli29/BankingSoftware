@@ -3,34 +3,26 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-     <div class="mt-3 col-md-6 mx-auto">
+    <div class="mt-3 col-md-6 mx-auto">
         <div class="card card-body">
             <div class="row">
                 <div class="col">
                     <center>
-                         <h1>MoneyTransfer</h1>    
+                        <h1>MoneyTransfer</h1>    
                     </center>
                 </div>
             </div>
-            
-         <asp:TextBox ID="ReceiverID" CssClass="form-control" runat="server" placeholder="Receiver ID"></asp:TextBox>
-              <br /> <?/br>
-         <asp:TextBox ID="YourPassword" CssClass="form-control" runat="server" placeholder="Your Password" TextMode="Password"></asp:TextBox>
-              <br /> <?/br>
-         <asp:TextBox ID="AmountOfMoney" CssClass="form-control" runat="server" placeholder="Amount Of Money"></asp:TextBox>
-              <br /> <?/br>
-         <asp:TextBox ID="Reason" CssClass="form-control" TextMode="MultiLine" runat="server" placeholder="Reason"></asp:TextBox>
+            <asp:TextBox ID="ReceiverID" CssClass="form-control" runat="server" placeholder="Receiver ID"></asp:TextBox>
+            <br /> <?/br>
+            <asp:TextBox ID="YourPassword" CssClass="form-control" runat="server" placeholder="Your Password" TextMode="Password"></asp:TextBox>
+            <br /> <?/br>
+            <asp:TextBox ID="AmountOfMoney" CssClass="form-control" runat="server" placeholder="Amount Of Money"></asp:TextBox>
+            <br /> <?/br>
+            <asp:TextBox ID="Reason" CssClass="form-control" TextMode="MultiLine" runat="server" placeholder="Reason"></asp:TextBox>
 
-                    <div class="form-group" >
-        <asp:Button  ID="Submit" CssClass="btn btn-info col-12 mt-5 btn-lg" runat="server" Text="Submit" OnClick="Transfer_Click"/>
-                 </div>
-
+            <div class="form-group" >
+                <asp:Button  ID="Submit" CssClass="btn btn-info col-12 mt-5 btn-lg" runat="server" Text="Submit" OnClick="Transfer_Click"/>
             </div>
-
-           <br>
-
-         </div>
-
-
-
+        </div>
+    </div>
 </asp:Content>

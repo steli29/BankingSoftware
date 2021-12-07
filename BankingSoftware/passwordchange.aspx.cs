@@ -5,12 +5,11 @@ using System.Net.Mail;
 using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
-using System.Text.RegularExpressions;
 using System.Linq;
 
 namespace BankingSoftware
 {
-    public partial class WebForm8 : System.Web.UI.Page
+    public partial class WebForm8 : Page
     {
         string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
         Random random = new Random();
@@ -114,8 +113,7 @@ namespace BankingSoftware
                 {
                     if (Npass.Text != reader.GetValue(5).ToString())
                     {
-                        con.Close();
-                        con.Open();
+                        reader.Close();
                         cmd = new SqlCommand("UPDATE users_tbl SET password = '"
                             + Npass.Text.Trim() + "' WHERE email = '" + emailcheck + "'", con);
                         cmd.ExecuteNonQuery();
@@ -145,11 +143,7 @@ namespace BankingSoftware
                     if (uppercase)
                         break;
                 }
-                if (length && anynumber && uppercase)
-                    return true;
-                else
-                    return false;
-
+                return (length && anynumber && uppercase);
             }
             catch (Exception ex)
             {

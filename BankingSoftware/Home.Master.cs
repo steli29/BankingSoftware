@@ -1,45 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace BankingSoftware
 {
-    public partial class Home : System.Web.UI.MasterPage
+    public partial class Home : MasterPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //session[user_id] ?? -> ul[id=user]
             try
             {
-                if(Session["user_id"] != null)
+                if (Session["user_id"] != null)
                 {
-                    Session["user_id"] = null;
-                    Session["balance"] = null;
-                    Session["pass"] = null;
-                    Session["name"] = null;
-
+                    ViewBalance.Visible = true;
+                    AddFunds.Visible = true;
+                    MoneyTrans.Visible = true;
+                    MyCard.Visible = true;
+                    Loan.Visible = true;
                     signin.Visible = false;
                     signup.Visible = false;
-                    Logout.Visible = true;
+                    Logout.Visible= true;
                 }
-                else
-                {
-                    /*ViewBalance.Visible = false;
-                    AddFunds.Visible = false;
-                    MoneyTrans.Visible = false;
-                    MyCard.Visible = false;
-                    Loan.Visible = false;  
-                    Logout.Visible=false;*/   
-
-                }
-                //TODO function buttons should be hidden
             }
             catch(Exception ex)
             {
-
+                Response.Write("<script>alert('" + ex.Message + "');</script>");
             }
         }
 
@@ -47,6 +31,16 @@ namespace BankingSoftware
         {
             Session["user_id"] = null;
             Session["name"] = null;
+            Session["balance"] = null;
+            Session["pass"] = null;
+            ViewBalance.Visible = false;
+            AddFunds.Visible = false;
+            MoneyTrans.Visible = false;
+            MyCard.Visible = false;
+            Loan.Visible = false;
+            signin.Visible = true;
+            signup.Visible = true;
+            Logout.Visible = false;
             Response.Redirect("homepage.aspx");
         }
     }

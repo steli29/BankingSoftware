@@ -6,7 +6,7 @@ using System.Web.UI;
 
 namespace BankingSoftware
 {
-    public partial class WebForm4 : System.Web.UI.Page
+    public partial class WebForm4 : Page
     {
         string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
 

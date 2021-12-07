@@ -28,19 +28,19 @@
 
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item active">
-                        <asp:LinkButton CssClass="nav-link" ID="ViewBalance" runat="server" href="viewBalance.aspx">View Balance</asp:LinkButton>
+                        <asp:LinkButton CssClass="nav-link" ID="ViewBalance" Visible="true" runat="server" href="viewBalance.aspx">View Balance</asp:LinkButton>
                     </li>
                     <li class="nav-item active">
-                        <asp:LinkButton CssClass="nav-link" ID="MyCard" runat="server" href="myCards.aspx">My Cards</asp:LinkButton>
+                        <asp:LinkButton CssClass="nav-link" ID="MyCard" runat="server" Visible="false" href="myCards.aspx">My Cards</asp:LinkButton>
                     </li>
                     <li class="nav-item active">
-                        <asp:LinkButton CssClass="nav-link" ID="MoneyTrans" runat="server" href="MoneyTrans.aspx">Money transfer</asp:LinkButton>
+                        <asp:LinkButton CssClass="nav-link" ID="MoneyTrans" runat="server" Visible="false" href="MoneyTrans.aspx">Money transfer</asp:LinkButton>
                     </li>
                     <li class="nav-item active">
-                        <asp:LinkButton CssClass="nav-link" ID="AddFunds" runat="server" href="addfunds.aspx">Add Funds</asp:LinkButton>
+                        <asp:LinkButton CssClass="nav-link" ID="AddFunds" runat="server" Visible="false" href="addfunds.aspx">Add Funds</asp:LinkButton>
                     </li>
                     <li class="nav-item active">
-                        <asp:LinkButton CssClass="nav-link" ID="Loan" runat="server" href="applyforloan.aspx">Apply for loan</asp:LinkButton>
+                        <asp:LinkButton CssClass="nav-link" ID="Loan" runat="server" Visible="false" href="applyforloan.aspx">Apply for loan</asp:LinkButton>
                     </li>
                 </ul>
                 <ul class="navbar-nav">
