@@ -24,7 +24,7 @@
             <br /> <?/br>
             <div class="form-group" >
                 <asp:DropDownList ID="Loans" CssClass="form-control" runat="server">
-                    <asp:ListItem Text="I'm looking For" Value="imlookingfor" />
+                    <asp:ListItem Text="I'm looking for" Value="imlookingfor" />
                     <asp:ListItem Text="PersonalLoan" Value="PersonalLoan" />
                     <asp:ListItem Text="CarLoan" Value="CarLoan" />
                     <asp:ListItem Text="HomeLoan" Value="HomeLoan" />

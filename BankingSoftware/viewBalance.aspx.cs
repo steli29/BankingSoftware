@@ -57,11 +57,11 @@ namespace BankingSoftware
             SqlCommand cmd =default;
             if(Session["Type"].ToString() == "Income")
             {
-                cmd = new SqlCommand("DECLARE @PageNumber AS INT DECLARE @RowsOfPage AS INT SET @PageNumber = " + page + " SET @RowsOfPage = 7 SELECT * FROM balance_tbl WHERE user_id ='" + Session["user_id"] + "' AND type = 'Income' ORDER BY transaction_id OFFSET (@PageNumber - 1) * @RowsOfPage ROWS FETCH NEXT @RowsOfPage ROWS ONLY", con);
+                cmd = new SqlCommand("DECLARE @PageNumber AS INT DECLARE @RowsOfPage AS INT SET @PageNumber = " + page + " SET @RowsOfPage = 7 SELECT * FROM balance_tbl WHERE user_id ='" + Session["user_id"] + "' AND transaction_amount > 0 ORDER BY transaction_id OFFSET (@PageNumber - 1) * @RowsOfPage ROWS FETCH NEXT @RowsOfPage ROWS ONLY", con);
             }
             else if(Session["Type"].ToString() == "Cost")
             {
-                cmd = new SqlCommand("DECLARE @PageNumber AS INT DECLARE @RowsOfPage AS INT SET @PageNumber = " + page + " SET @RowsOfPage = 7 SELECT * FROM balance_tbl WHERE user_id ='" + Session["user_id"] + "' AND type = 'Cost' ORDER BY transaction_id OFFSET (@PageNumber - 1) * @RowsOfPage ROWS FETCH NEXT @RowsOfPage ROWS ONLY", con);
+                cmd = new SqlCommand("DECLARE @PageNumber AS INT DECLARE @RowsOfPage AS INT SET @PageNumber = " + page + " SET @RowsOfPage = 7 SELECT * FROM balance_tbl WHERE user_id ='" + Session["user_id"] + "' AND transaction_amount < 0 ORDER BY transaction_id OFFSET (@PageNumber - 1) * @RowsOfPage ROWS FETCH NEXT @RowsOfPage ROWS ONLY", con);
             }
             else
             {
