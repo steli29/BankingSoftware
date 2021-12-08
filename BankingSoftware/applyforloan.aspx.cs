@@ -22,31 +22,18 @@ namespace BankingSoftware
                 string.IsNullOrEmpty(MoneyLoan.Text.Trim()) || string.IsNullOrEmpty(FullName.Text.Trim()) ||
                 string.IsNullOrEmpty(ContactNumber.Text.Trim()) || string.IsNullOrEmpty(CityName.Text.Trim()))
                 Response.Write("<script>alert('Please fill in all fields!');</script>");
-            else if (!checkNameExists(FullName.Text.Trim()))
-            {
+            else if (Session["name"].ToString() != FullName.Text.Trim())
                 Response.Write("<script>alert('Invalid user!');</script>");
-            }
             else if (!checkPhoneExists(ContactNumber.Text.Trim()))
-            {
                 Response.Write("<script>alert('Invalid contact number!');</script>");
-            }
             else if (!checkMoneyInput(NMI.Text.Trim()))
-            {
                 Response.Write("<script>alert('Invalid money input!');</script>");
-            }
-            else if (!checkMoneyInput(MoneyLoan.Text.Trim()))
-            {
+            else if (!checkMoneyInput(MoneyLoan.Text.Trim()) || decimal.Parse(MoneyLoan.Text.Trim()) > 200000)
                 Response.Write("<script>alert('Invalid money input!');</script>");
-            }
             else if (!checkCity(CityName.Text.Trim()))
-            {
                 Response.Write("<script>alert('Invalid city name!');</script>");
-            }
             else
-            {
                 initLoanApplication();
-            }
-
         }
         void Loan()
         {
@@ -108,27 +95,6 @@ namespace BankingSoftware
             }
         }
 
-        bool checkNameExists(string nameField)
-        {
-            try
-            {
-                SqlConnection con = new SqlConnection(strcon);
-                if (con.State == ConnectionState.Closed)
-                {
-                    con.Open();
-                }
-
-                SqlCommand cmd = new SqlCommand("SELECT * FROM users_tbl WHERE user_id ='"+ Session["user_id"] +"' AND name='" + nameField + "';", con);
-                SqlDataReader reader = cmd.ExecuteReader();
-
-                return reader.Read();
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-        }
-
         bool checkPhoneExists(string phoneNumber)
         {
             try
@@ -160,22 +126,9 @@ namespace BankingSoftware
                     con.Open();
                 }
 
-                SqlCommand cmd = new SqlCommand("SELECT * FROM users_tbl WHERE user_id ='" + Session["user_id"] + "';", con);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM users_tbl WHERE user_id = '" + Session["user_id"] + "' AND address LIKE '%" + CityName.Text.Trim() + "%'", con);
                 SqlDataReader reader = cmd.ExecuteReader();
-                string address = default;
-                if (reader.Read())
-                {
-                    address = reader.GetValue(6).ToString();
-                }
-               
-                if (address.Split(' ')[2] == city)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return reader.Read();
             }
             catch (Exception ex)
             {

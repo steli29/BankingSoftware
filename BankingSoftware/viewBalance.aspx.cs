@@ -29,15 +29,12 @@ namespace BankingSoftware
                 DataSet ds = new DataSet();
                 da = new SqlDataAdapter(cmd);
                 da.Fill(ds);
-                
                 Balance.DataSource = ds;
                 Balance.DataBind();
-
                 con.Close();
+
                 if( Session["Type"] == null)
-                {
                     Session["Type"] = "All";
-                }
                 getPageRows(1);
                 int pageCount = rows();
                 if (pageCount == 1) Right.Visible = false;
@@ -56,17 +53,12 @@ namespace BankingSoftware
             }
             SqlCommand cmd =default;
             if(Session["Type"].ToString() == "Income")
-            {
                 cmd = new SqlCommand("DECLARE @PageNumber AS INT DECLARE @RowsOfPage AS INT SET @PageNumber = " + page + " SET @RowsOfPage = 7 SELECT * FROM balance_tbl WHERE user_id ='" + Session["user_id"] + "' AND transaction_amount > 0 ORDER BY transaction_id OFFSET (@PageNumber - 1) * @RowsOfPage ROWS FETCH NEXT @RowsOfPage ROWS ONLY", con);
-            }
             else if(Session["Type"].ToString() == "Cost")
-            {
                 cmd = new SqlCommand("DECLARE @PageNumber AS INT DECLARE @RowsOfPage AS INT SET @PageNumber = " + page + " SET @RowsOfPage = 7 SELECT * FROM balance_tbl WHERE user_id ='" + Session["user_id"] + "' AND transaction_amount < 0 ORDER BY transaction_id OFFSET (@PageNumber - 1) * @RowsOfPage ROWS FETCH NEXT @RowsOfPage ROWS ONLY", con);
-            }
             else
-            {
                 cmd = new SqlCommand("DECLARE @PageNumber AS INT DECLARE @RowsOfPage AS INT SET @PageNumber = " + page + " SET @RowsOfPage = 7 SELECT * FROM balance_tbl WHERE user_id ='" + Session["user_id"] + "' ORDER BY transaction_id OFFSET (@PageNumber - 1) * @RowsOfPage ROWS FETCH NEXT @RowsOfPage ROWS ONLY", con);
-            }
+            
             SqlDataAdapter db = new SqlDataAdapter(cmd);
             DataSet de = new DataSet();
             DataTable dt = new DataTable();
@@ -74,41 +66,23 @@ namespace BankingSoftware
             dt = de.Tables[0];
             if (dt.Rows.Count > 0)
             {
-                //db = new SqlDataAdapter(cmd);
-                //db.Fill(de);
-                //SqlCommand cmdRows = new SqlCommand("SELECT COUNT(1) FROM balance_tbl WHERE user_id='" + Session["user_id"] + "';", con);
-                //int UserExist = (int)cmdRows.ExecuteScalar();
-                //if (UserExist != 0)
-                //{
                 All.Visible = true;
                 Income.Visible = true;
                 Costs.Visible = true;
 
                 if (page == 1) 
-                {
                     Left.Visible = false;
-                }
-
-                else 
-                { 
+                else  
                     Left.Visible = true;
-                }
 
                 if (dt.Rows.Count % 7 != 0)
-                {
                     Right.Visible = false;
-                }
-
                 else
-                {
                     Right.Visible = true;
-                }
-                    Transaction.DataSource = de;
-                    Transaction.DataBind();
-                //}
-            }
 
-            
+                Transaction.DataSource = de;
+                Transaction.DataBind();
+            }            
             else
             {
                 Pagenumber.Text = (page-1).ToString();
@@ -131,10 +105,7 @@ namespace BankingSoftware
             int pageCount = UserExist / 7;
 
             if (UserExist % 7 != 0)
-            {
                 pageCount++;
-            }
-
             return pageCount;
         }
 
@@ -145,10 +116,8 @@ namespace BankingSoftware
             num++;
             if (num >= pageCount)
             {
-                Pagenumber.Text = num.ToString();
-                
-                getPageRows(num);
-                
+                Pagenumber.Text = num.ToString();                
+                getPageRows(num);                
                 Right.Visible = false;
             }
         }
@@ -157,12 +126,8 @@ namespace BankingSoftware
         {
             int num = int.Parse(Pagenumber.Text.ToString());
             num--;
-
-            if (num <= 0) 
-            { 
+            if (num <= 0)  
                 Left.Visible = false;
-            }
-
             else
             {
                 Pagenumber.Text = num.ToString();
@@ -175,8 +140,6 @@ namespace BankingSoftware
             Session["Type"] = "All";
             Pagenumber.Text = "1";
             getPageRows(1);
-
-
         }
 
         public void Income_Click(object sender, EventArgs e)
@@ -184,7 +147,6 @@ namespace BankingSoftware
             Session["Type"] = "Income";
             Pagenumber.Text = "1";
             getPageRows(1);
-
         }
 
         public void Costs_Click(object sender, EventArgs e)
@@ -192,7 +154,6 @@ namespace BankingSoftware
             Session["Type"] = "Cost";
             Pagenumber.Text = "1";
             getPageRows(1);
-
         }
 
         void LoanWithdraw()
@@ -214,7 +175,7 @@ namespace BankingSoftware
 
                 int monthsadded = 1 + alreadyWithdraw();
                 decimal fee = decimal.Parse(Loan[4]) / 12 + decimal.Parse(Loan[4]) / 240;
-                while (DateTime.Parse(Loan[3]).AddMonths(monthsadded) <= dateTime && DateTime.Parse(Loan[3]).AddYears(1) >= dateTime)
+                while (DateTime.Parse(Loan[3]).AddMonths(monthsadded) <= dateTime && monthsadded < 12)
                 {
                     decimal new_balance = decimal.Parse(Session["balance"].ToString()) - fee;
                     Session["balance"] = new_balance;
@@ -231,7 +192,6 @@ namespace BankingSoftware
                     cmd = new SqlCommand("UPDATE users_tbl SET balance = '" + new_balance.ToString().Replace(',', '.').Trim()
                     + "'WHERE user_id = '" + Session["user_id"] + "'", con);
                     cmd.ExecuteNonQuery();
-                    con.Close();
                 }
                 if (DateTime.Parse(Loan[3]).AddYears(1) < dateTime)
                     EndLoan();
@@ -250,9 +210,7 @@ namespace BankingSoftware
             SqlDataReader reader = cmd.ExecuteReader();
             int counter = 0;
             while (reader.Read())
-            {
                 counter++;
-            }
             return counter;
         }
 
