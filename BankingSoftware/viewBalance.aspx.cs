@@ -34,7 +34,10 @@ namespace BankingSoftware
                 Balance.DataBind();
 
                 con.Close();
-
+                if( Session["Type"] == null)
+                {
+                    Session["Type"] = "All";
+                }
                 getPageRows(1);
                 int pageCount = rows();
                 if (pageCount == 1) Right.Visible = false;
@@ -51,7 +54,19 @@ namespace BankingSoftware
             {
                 con.Open();
             }
-            SqlCommand cmd = new SqlCommand("DECLARE @PageNumber AS INT DECLARE @RowsOfPage AS INT SET @PageNumber = " + page + " SET @RowsOfPage = 7 SELECT * FROM balance_tbl WHERE user_id ='" + Session["user_id"] + "' ORDER BY transaction_id OFFSET (@PageNumber - 1) * @RowsOfPage ROWS FETCH NEXT @RowsOfPage ROWS ONLY", con);
+            SqlCommand cmd =default;
+            if(Session["Type"].ToString() == "Income")
+            {
+                cmd = new SqlCommand("DECLARE @PageNumber AS INT DECLARE @RowsOfPage AS INT SET @PageNumber = " + page + " SET @RowsOfPage = 7 SELECT * FROM balance_tbl WHERE user_id ='" + Session["user_id"] + "' AND type = 'Income' ORDER BY transaction_id OFFSET (@PageNumber - 1) * @RowsOfPage ROWS FETCH NEXT @RowsOfPage ROWS ONLY", con);
+            }
+            else if(Session["Type"].ToString() == "Cost")
+            {
+                cmd = new SqlCommand("DECLARE @PageNumber AS INT DECLARE @RowsOfPage AS INT SET @PageNumber = " + page + " SET @RowsOfPage = 7 SELECT * FROM balance_tbl WHERE user_id ='" + Session["user_id"] + "' AND type = 'Cost' ORDER BY transaction_id OFFSET (@PageNumber - 1) * @RowsOfPage ROWS FETCH NEXT @RowsOfPage ROWS ONLY", con);
+            }
+            else
+            {
+                cmd = new SqlCommand("DECLARE @PageNumber AS INT DECLARE @RowsOfPage AS INT SET @PageNumber = " + page + " SET @RowsOfPage = 7 SELECT * FROM balance_tbl WHERE user_id ='" + Session["user_id"] + "' ORDER BY transaction_id OFFSET (@PageNumber - 1) * @RowsOfPage ROWS FETCH NEXT @RowsOfPage ROWS ONLY", con);
+            }
             SqlDataAdapter db = new SqlDataAdapter(cmd);
             DataSet de = new DataSet();
             DataTable dt = new DataTable();
@@ -157,55 +172,27 @@ namespace BankingSoftware
 
         public void All_Click(object sender, EventArgs e)
         {
-            SqlConnection con = new SqlConnection(strcon);
-            if (con.State == ConnectionState.Closed)
-            {
-                con.Open();
-            }
-            SqlCommand cmd = new SqlCommand("SELECT * FROM balance_tbl FULL OUTER JOIN users_tbl ON users_tbl.user_id = balance_tbl.user_id WHERE users_tbl.user_id='" + Session["user_id"] + "';", con);
-            SqlDataAdapter db = new SqlDataAdapter(cmd);
-            DataSet de = new DataSet();
-            db = new SqlDataAdapter(cmd);
-            db.Fill(de);
-            Transaction.DataSource = de;
-            Transaction.DataBind();
-            con.Close();
+            Session["Type"] = "All";
+            Pagenumber.Text = "1";
+            getPageRows(1);
+
+
         }
 
         public void Income_Click(object sender, EventArgs e)
         {
-            SqlConnection con = new SqlConnection(strcon);
-            if (con.State == ConnectionState.Closed)
-            {
-                con.Open();
-            }
+            Session["Type"] = "Income";
+            Pagenumber.Text = "1";
+            getPageRows(1);
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM balance_tbl FULL OUTER JOIN users_tbl ON users_tbl.user_id = balance_tbl.user_id WHERE users_tbl.user_id='" + Session["user_id"] + "' AND transaction_amount > '0';", con);
-            SqlDataAdapter db = new SqlDataAdapter(cmd);
-            DataSet de = new DataSet();
-            db = new SqlDataAdapter(cmd);
-            db.Fill(de);
-            Transaction.DataSource = de;
-            Transaction.DataBind();
-            con.Close();
         }
 
         public void Costs_Click(object sender, EventArgs e)
         {
-            SqlConnection con = new SqlConnection(strcon);
-            if (con.State == ConnectionState.Closed)
-            {
-                con.Open();
-            }
+            Session["Type"] = "Cost";
+            Pagenumber.Text = "1";
+            getPageRows(1);
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM balance_tbl FULL OUTER JOIN users_tbl ON users_tbl.user_id = balance_tbl.user_id WHERE users_tbl.user_id='" + Session["user_id"] + "' AND transaction_amount < '0';", con);
-            SqlDataAdapter db = new SqlDataAdapter(cmd);
-            DataSet de = new DataSet();
-            db = new SqlDataAdapter(cmd);
-            db.Fill(de);
-            Transaction.DataSource = de;
-            Transaction.DataBind();
-            con.Close();
         }
 
         void LoanWithdraw()

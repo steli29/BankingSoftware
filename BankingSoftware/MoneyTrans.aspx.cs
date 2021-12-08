@@ -62,12 +62,13 @@ namespace BankingSoftware
 
                 DateTime date = DateTime.Today;
                 cmd = new SqlCommand("INSERT INTO balance_tbl (user_id, new_balance, date, transaction_amount, info)" +
-                    " values(@user_id, @new_balance, @date, @transaction_amount, @info)", con);
+                    " values(@user_id, @new_balance, @date, @transaction_amount, @info, @type)", con);
                 cmd.Parameters.AddWithValue("@user_id", ReceiverID.Text.Trim());
                 cmd.Parameters.AddWithValue("@new_balance", new_balance);
                 cmd.Parameters.AddWithValue("@date", date);
                 cmd.Parameters.AddWithValue("@transaction_amount", decimal.Parse(cash));
                 cmd.Parameters.AddWithValue("@info", Reason.Text);
+                cmd.Parameters.AddWithValue("@type", "Income");
                 cmd.ExecuteNonQuery();
 
                 cmd = new SqlCommand("UPDATE users_tbl SET balance = '" + new_balance.ToString().Replace(',', '.').Trim()
@@ -82,12 +83,13 @@ namespace BankingSoftware
                 cmd.ExecuteNonQuery();
 
                 cmd = new SqlCommand("INSERT INTO balance_tbl (user_id, new_balance, date, transaction_amount, info)" +
-                    " values(@user_id, @new_balance, @date, @transaction_amount, @info)", con);
+                    " values(@user_id, @new_balance, @date, @transaction_amount, @info, @type)", con);
                 cmd.Parameters.AddWithValue("@user_id", Session["user_id"]);
                 cmd.Parameters.AddWithValue("@new_balance", new_balance);
                 cmd.Parameters.AddWithValue("@date", date);
                 cmd.Parameters.AddWithValue("@transaction_amount", (decimal.Parse(cash) + fee) * -1);
                 cmd.Parameters.AddWithValue("@info", Reason.Text);
+                cmd.Parameters.AddWithValue("@type", "Cost");
                 cmd.ExecuteNonQuery();
                 con.Close();
 
