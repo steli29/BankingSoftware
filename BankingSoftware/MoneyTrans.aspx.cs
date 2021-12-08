@@ -61,7 +61,7 @@ namespace BankingSoftware
                 reader.Close();
 
                 DateTime date = DateTime.Today;
-                cmd = new SqlCommand("INSERT INTO balance_tbl (user_id, new_balance, date, transaction_amount, info)" +
+                cmd = new SqlCommand("INSERT INTO balance_tbl (user_id, new_balance, date, transaction_amount, info, type)" +
                     " values(@user_id, @new_balance, @date, @transaction_amount, @info, @type)", con);
                 cmd.Parameters.AddWithValue("@user_id", ReceiverID.Text.Trim());
                 cmd.Parameters.AddWithValue("@new_balance", new_balance);
@@ -82,7 +82,7 @@ namespace BankingSoftware
                     + "' WHERE user_id = '" + Session["user_id"] + "'", con);
                 cmd.ExecuteNonQuery();
 
-                cmd = new SqlCommand("INSERT INTO balance_tbl (user_id, new_balance, date, transaction_amount, info)" +
+                cmd = new SqlCommand("INSERT INTO balance_tbl (user_id, new_balance, date, transaction_amount, info, type)" +
                     " values(@user_id, @new_balance, @date, @transaction_amount, @info, @type)", con);
                 cmd.Parameters.AddWithValue("@user_id", Session["user_id"]);
                 cmd.Parameters.AddWithValue("@new_balance", new_balance);
@@ -192,9 +192,15 @@ namespace BankingSoftware
                     con.Open();
                 }
 
-                SqlCommand cmd = new SqlCommand("SELECT * FROM users_tbl WHERE user_id='" + Session["user_id"] + "' AND password='" + YourPassword.Text + "';", con);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM users_tbl WHERE user_id='" + Session["user_id"] + "';", con);
                 SqlDataReader reader = cmd.ExecuteReader();
-                return reader.Read();
+                bool result = default;
+                if (reader.Read())
+                {
+                    result = WebForm4.ValidatePassword(YourPassword.Text.Trim(), reader.GetValue(5).ToString());
+                }
+
+                return result;
             }
             catch (Exception ex)
             {

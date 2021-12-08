@@ -50,6 +50,9 @@ namespace BankingSoftware
                     con.Open();
                 }
 
+                string password = Pswrd.Text.Trim();
+                string hashedPassword = WebForm4.HashPassword(password);
+
                 string name = Name.Text.Trim() + " " + Surname.Text.Trim();
                 string address = Country.Text + " " + State.Text + " " + City.Text + " " + Pin.Text.Trim() + " " + FAdress.Text;
                 SqlCommand cmd = new SqlCommand("INSERT INTO users_tbl (user_id, name, email, number, dob, password, address, balance) " +
@@ -59,7 +62,7 @@ namespace BankingSoftware
                 cmd.Parameters.AddWithValue("@email", Email.Text.Trim());
                 cmd.Parameters.AddWithValue("@number", PNumber.Text.Trim());
                 cmd.Parameters.AddWithValue("@dob", DoB.Text.Trim());
-                cmd.Parameters.AddWithValue("@password", Pswrd.Text.Trim());
+                cmd.Parameters.AddWithValue("@password", hashedPassword);
                 cmd.Parameters.AddWithValue("@address", address);
                 cmd.ExecuteNonQuery();
                 con.Close();

@@ -4,10 +4,13 @@
     <script>
         function showCodes(event) {
             const userPassConfirm = prompt('Enter your password');
-            const pass = '<%= Session["pass"].ToString() %>';
+            <%--const pass = '<%= Session["pass"].ToString() %>';--%>
+            document.getElementById('ContentPlaceHolder1_Passw').textContent = userPassConfirm;
             const pin = event.querySelector('#Pin');
             const sec = event.querySelector('#Sec');
-            if (userPassConfirm === pass) {
+            const result = `<% ValidatePassword(); %>`
+            console.log(result);
+            if (result) {
                 pin.style.display = 'block';
                 sec.style.display = 'block';
                 setTimeout(() => {
@@ -34,6 +37,7 @@
             </div>
         </div>
     </div>
+    <asp:Label ID="Passw" runat="server" Visible="false"></asp:Label>
     <asp:Button ID="RequestCard" runat="server" class="section2_btn btn22" Text="Request new card" OnClick="RequestCard_Click"/>
     <div class="wrapper">
         <asp:Repeater ID="CardRepeater" runat="server">
