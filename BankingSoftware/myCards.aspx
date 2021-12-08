@@ -2,26 +2,18 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="./customCss/cards.css" rel="stylesheet" type="text/css" />
     <script>
-        function showCodes(event) {
-            const userPassConfirm = prompt('Enter your password');
-            <%--const pass = '<%= Session["pass"].ToString() %>';--%>
-            document.getElementById('ContentPlaceHolder1_Passw').textContent = userPassConfirm;
-            const pin = event.querySelector('#Pin');
-            const sec = event.querySelector('#Sec');
-            const result = `<% ValidatePassword(); %>`
-            console.log(result);
-            if (result) {
-                pin.style.display = 'block';
-                sec.style.display = 'block';
-                setTimeout(() => {
-                    pin.style.display = 'none';
-                    sec.style.display = 'none';
-                }, 10000);
-            }
-            else {
-                alert('Wrong password!');
-            }
-        }
+    async function showCodes(event) {
+        event.preventDefault();
+        const pin = event.target.querySelector('#Pin');
+        const sec = event.target.querySelector('#Sec');
+        pin.style.display = 'block';
+        sec.style.display = 'block';
+        setTimeout(() => {
+            pin.style.display = 'none';
+            sec.style.display = 'none';
+        }, 10000);
+        
+    }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -37,12 +29,12 @@
             </div>
         </div>
     </div>
-    <asp:Label ID="Passw" runat="server" Visible="false"></asp:Label>
+    <%--<asp:HiddenField ID="HiddenPass" runat="server" />--%>
     <asp:Button ID="RequestCard" runat="server" class="section2_btn btn22" Text="Request new card" OnClick="RequestCard_Click"/>
     <div class="wrapper">
         <asp:Repeater ID="CardRepeater" runat="server">
             <ItemTemplate>
-                <div class="card" onclick="showCodes(this)">
+                <div class="card" onclick="showCodes(event)">
                     <div class="upper">
                         <h6>Debit</h6>
                         <h4>Visa</h4>

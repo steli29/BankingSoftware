@@ -3,6 +3,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Security.Cryptography;
+using System.Web.Services;
 using System.Web.UI;
 
 namespace BankingSoftware
@@ -118,26 +119,7 @@ namespace BankingSoftware
             if (dr.Read())
                 Session["pass"] = dr.GetValue(5).ToString();
         }
-
-        public bool ValidatePassword()
-        {
-            string password = Passw.Text.Trim();
-            byte[] hashBytes = Convert.FromBase64String(Session["pass"].ToString());
-            byte[] salt = new byte[16];
-            Array.Copy(hashBytes, 0, salt, 0, 16);
-            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 10000);
-            byte[] hash = pbkdf2.GetBytes(20);
-            for (int i = 0; i < 20; i++)
-            {
-                if (hashBytes[i + 16] != hash[i])
-                {
-                    return false;
-                }
-
-            }
-
-            return true;
-        }
+        
     }
 }
 

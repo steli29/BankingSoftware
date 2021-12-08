@@ -107,15 +107,16 @@ namespace BankingSoftware
                 {
                     con.Open();
                 }
+                var hashedPassword = WebForm4.HashPassword(Npass.Text.Trim());
                 SqlCommand cmd = new SqlCommand("SELECT * FROM users_tbl WHERE email = '" + emailcheck + "'", con);
                 SqlDataReader reader = cmd.ExecuteReader();
                 if (reader.Read())
-                {
-                    if (Npass.Text != reader.GetValue(5).ToString())
+                {   var result = WebForm4.ValidatePassword(Npass.Text.Trim(), reader.GetValue(5).ToString());
+                    if (!result)
                     {
                         reader.Close();
                         cmd = new SqlCommand("UPDATE users_tbl SET password = '"
-                            + Npass.Text.Trim() + "' WHERE email = '" + emailcheck + "'", con);
+                            + hashedPassword + "' WHERE email = '" + emailcheck + "'", con);
                         cmd.ExecuteNonQuery();
                         ScriptManager.RegisterStartupScript(this, GetType(), "alert",
                             "alert('Password Changed!');window.location ='signin.aspx';", true);
