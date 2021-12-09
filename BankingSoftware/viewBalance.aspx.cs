@@ -118,6 +118,9 @@ namespace BankingSoftware
             {
                 Pagenumber.Text = num.ToString();                
                 getPageRows(num);                
+            }
+            if(num == pageCount)
+            {
                 Right.Visible = false;
             }
         }
