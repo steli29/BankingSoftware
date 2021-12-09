@@ -16,7 +16,7 @@
             <br /> <?/br>
             <asp:TextBox ID="ContactNumber" CssClass="form-control" runat="server" placeholder="Contact Number"></asp:TextBox>
             <br /> <?/br>
-            <asp:TextBox ID="CityName" CssClass="form-control" runat="server" placeholder="City"></asp:TextBox>
+            <asp:TextBox ID="Pswrd" CssClass="form-control" runat="server" placeholder="Password" TextMode="Password"></asp:TextBox>
             <br /> <?/br>
             <asp:TextBox ID="NMI" CssClass="form-control" runat="server" placeholder="Net Monthly Income"></asp:TextBox>
             <br /> <?/br>

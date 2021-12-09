@@ -20,7 +20,7 @@ namespace BankingSoftware
         {
             if (Loans.SelectedValue == "imlookingfor" || string.IsNullOrEmpty(NMI.Text.Trim()) ||
                 string.IsNullOrEmpty(MoneyLoan.Text.Trim()) || string.IsNullOrEmpty(FullName.Text.Trim()) ||
-                string.IsNullOrEmpty(ContactNumber.Text.Trim()) || string.IsNullOrEmpty(CityName.Text.Trim()))
+                string.IsNullOrEmpty(ContactNumber.Text.Trim()) || string.IsNullOrEmpty(Pswrd.Text.Trim()))
                 Response.Write("<script>alert('Please fill in all fields!');</script>");
             else if (Session["name"].ToString() != FullName.Text.Trim())
                 Response.Write("<script>alert('Invalid user!');</script>");
@@ -28,10 +28,14 @@ namespace BankingSoftware
                 Response.Write("<script>alert('Invalid contact number!');</script>");
             else if (!checkMoneyInput(NMI.Text.Trim()))
                 Response.Write("<script>alert('Invalid money input!');</script>");
-            else if (!checkMoneyInput(MoneyLoan.Text.Trim()) || decimal.Parse(MoneyLoan.Text.Trim()) > 200000)
+            else if (!checkMoneyInput(MoneyLoan.Text.Trim()))
                 Response.Write("<script>alert('Invalid money input!');</script>");
-            else if (!checkCity(CityName.Text.Trim()))
-                Response.Write("<script>alert('Invalid city name!');</script>");
+            else if (decimal.Parse(MoneyLoan.Text.Trim()) > 200000)
+                Response.Write("<script>alert('The maximum loan you can request is 200 000!');</script>");
+            else if (!checkYourPassword())
+                Response.Write("<script>alert('Wrong Password!');</script>");
+            else if (checkExistLoan())
+                Response.Write("<script>alert('You may only have one active loan!');</script>");
             else
                 initLoanApplication();
         }
@@ -116,7 +120,34 @@ namespace BankingSoftware
             }
         }
         
-        bool checkCity(string city)
+        bool checkMoneyInput(string money)
+        {
+            try
+            {
+                return (decimal.TryParse(money.Replace('.', ',').Trim(), out decimal myMoney) &&
+                    decimal.Parse(money.Replace('.', ',').Trim()) != 0);
+            }
+            catch (Exception ex)
+            {
+                Response.Write("<script>alert('" + ex.Message + "');</script>");
+                return false;
+            }
+        }
+
+        bool checkExistLoan()
+        {
+            SqlConnection con = new SqlConnection(strcon);
+            if (con.State == ConnectionState.Closed)
+            {
+                con.Open();
+            }
+
+            SqlCommand cmd = new SqlCommand("SELECT * FROM balance_tbl WHERE user_id = '" + Session["user_id"] + "' AND type='Loan'", con);
+            SqlDataReader reader = cmd.ExecuteReader();
+            return reader.Read();
+        }
+
+        bool checkYourPassword()
         {
             try
             {
@@ -126,22 +157,15 @@ namespace BankingSoftware
                     con.Open();
                 }
 
-                SqlCommand cmd = new SqlCommand("SELECT * FROM users_tbl WHERE user_id = '" + Session["user_id"] + "' AND address LIKE '%" + CityName.Text.Trim() + "%'", con);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM users_tbl WHERE user_id='" + Session["user_id"] + "';", con);
                 SqlDataReader reader = cmd.ExecuteReader();
-                return reader.Read();
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-        }
+                bool result = default;
+                if (reader.Read())
+                {
+                    result = WebForm4.ValidatePassword(Pswrd.Text.Trim(), reader.GetValue(5).ToString());
+                }
 
-        bool checkMoneyInput(string money)
-        {
-            try
-            {
-                return (decimal.TryParse(money.Replace('.', ',').Trim(), out decimal myMoney) &&
-                    decimal.Parse(money.Replace('.', ',').Trim()) != 0);
+                return result;
             }
             catch (Exception ex)
             {
