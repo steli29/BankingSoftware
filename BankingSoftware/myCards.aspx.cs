@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -14,12 +15,14 @@ namespace BankingSoftware
         int rowsLength = default;
         protected void Page_Load(object sender, EventArgs e)
         {
+            checkCardExpired();
             if(Session["user_id"] == null)
                 Response.Redirect("signin.aspx");
             else if (!Page.IsPostBack)
             {
                 try
                 {
+                    checkCardExpired();
                     SqlConnection con = new SqlConnection(strcon);
                     if (con.State == ConnectionState.Closed)
                     {
@@ -120,6 +123,45 @@ namespace BankingSoftware
                 Session["pass"] = dr.GetValue(5).ToString();
         }
         
+        void checkCardExpired()
+        {
+            try
+            {
+                SqlConnection con = new SqlConnection(strcon);
+                if (con.State == ConnectionState.Closed)
+                {
+                    con.Open();
+                }
+                SqlCommand cmd = new SqlCommand("SELECT * FROM cards_tbl WHERE user_id='" + Session["user_id"] + "'", con);
+                SqlDataReader reader = cmd.ExecuteReader();
+                List<string> data = new List<string>();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        data.Add(reader.GetValue(2).ToString());
+                        data.Add(reader.GetValue(0).ToString());
+                    }
+                    reader.Close();
+                    for (int i = 0; i < data.Count; i+=2)
+                    {
+                        DateTime expirationdate = DateTime.Parse("01/" + data[i]);
+                        expirationdate = expirationdate.AddMonths(1);
+                        DateTime date = DateTime.Today;
+                        if (expirationdate < date)
+                        {
+                            cmd = new SqlCommand("DELETE FROM cards_tbl WHERE card_id='" + data[i+1] + "'", con);
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                Response.Write("<script>alert('" + ex.Message + "');</script>");
+            }
+        }
     }
 }
 

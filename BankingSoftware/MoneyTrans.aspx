@@ -8,18 +8,43 @@
             <div class="row">
                 <div class="col">
                     <center>
-                        <h1>MoneyTransfer</h1>    
+                        <h2>MoneyTransfer</h2>
+                        <hr>
                     </center>
                 </div>
             </div>
-            <asp:TextBox ID="ReceiverID" CssClass="form-control" runat="server" placeholder="Receiver ID"></asp:TextBox>
-            <br /> <?/br>
-            <asp:TextBox ID="YourPassword" CssClass="form-control" runat="server" placeholder="Your Password" TextMode="Password"></asp:TextBox>
-            <br /> <?/br>
-            <asp:TextBox ID="AmountOfMoney" CssClass="form-control" runat="server" placeholder="Amount Of Money"></asp:TextBox>
-            <br /> <?/br>
-            <asp:TextBox ID="Reason" CssClass="form-control" TextMode="MultiLine" runat="server" placeholder="Reason"></asp:TextBox>
-
+            <div class="row mt-2">
+                <div class="col-md-12 mx-auto">
+                    <label>Receiver ID</label>
+                    <div class="form-group">
+                        <asp:TextBox ID="ReceiverID" CssClass="form-control" runat="server" placeholder="Receiver ID"></asp:TextBox>
+                   </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-12 mx-auto">
+                    <label>Your Password</label>
+                    <div class="form-group">
+                        <asp:TextBox ID="YourPassword" CssClass="form-control" runat="server" placeholder="Your Password" TextMode="Password"></asp:TextBox>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-12 mx-auto">
+                    <label>Amount Of Money</label>
+                    <div class="form-group">
+                        <asp:TextBox ID="AmountOfMoney" CssClass="form-control" runat="server" placeholder="Amount Of Money"></asp:TextBox>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-12 mx-auto">
+                    <label>Reason</label>
+                    <div class="form-group">
+                        <asp:TextBox ID="Reason" CssClass="form-control" TextMode="MultiLine" runat="server" placeholder="Reason"></asp:TextBox>
+                    </div>
+                </div>
+            </div>
             <div class="form-group" >
                 <asp:Button  ID="Submit" CssClass="btn btn-info col-12 mt-5 btn-lg" runat="server" Text="Submit" OnClick="Transfer_Click"/>
             </div>

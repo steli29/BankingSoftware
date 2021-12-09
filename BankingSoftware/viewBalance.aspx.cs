@@ -12,13 +12,12 @@ namespace BankingSoftware
         string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
         protected void Page_Load(object sender, EventArgs e)
         {
-            LoanWithdraw();
-
             if (Session["user_id"] == null)
                 Response.Redirect("signin.aspx");
             Session["pass"] = null;
             try
             {
+                LoanWithdraw();
                 SqlConnection con = new SqlConnection(strcon);
                 if (con.State == ConnectionState.Closed)
                 {

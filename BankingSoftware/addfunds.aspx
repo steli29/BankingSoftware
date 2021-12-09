@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col">
                     <center>
-                        <h4>Add funds</h4>
+                        <h2>Add funds</h2>
                         <hr>
                     </center>
                 </div>
