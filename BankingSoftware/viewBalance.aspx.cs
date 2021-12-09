@@ -46,15 +46,16 @@ namespace BankingSoftware
         }
         void getPageRows(int page)
         {
+            var type = Session["Type"].ToString();
             SqlConnection con = new SqlConnection(strcon);
             if (con.State == ConnectionState.Closed)
             {
                 con.Open();
             }
             SqlCommand cmd =default;
-            if(Session["Type"].ToString() == "Income")
+            if(type == "Income")
                 cmd = new SqlCommand("DECLARE @PageNumber AS INT DECLARE @RowsOfPage AS INT SET @PageNumber = " + page + " SET @RowsOfPage = 7 SELECT * FROM balance_tbl WHERE user_id ='" + Session["user_id"] + "' AND transaction_amount > 0 ORDER BY transaction_id OFFSET (@PageNumber - 1) * @RowsOfPage ROWS FETCH NEXT @RowsOfPage ROWS ONLY", con);
-            else if(Session["Type"].ToString() == "Cost")
+            else if(type == "Cost")
                 cmd = new SqlCommand("DECLARE @PageNumber AS INT DECLARE @RowsOfPage AS INT SET @PageNumber = " + page + " SET @RowsOfPage = 7 SELECT * FROM balance_tbl WHERE user_id ='" + Session["user_id"] + "' AND transaction_amount < 0 ORDER BY transaction_id OFFSET (@PageNumber - 1) * @RowsOfPage ROWS FETCH NEXT @RowsOfPage ROWS ONLY", con);
             else
                 cmd = new SqlCommand("DECLARE @PageNumber AS INT DECLARE @RowsOfPage AS INT SET @PageNumber = " + page + " SET @RowsOfPage = 7 SELECT * FROM balance_tbl WHERE user_id ='" + Session["user_id"] + "' ORDER BY transaction_id OFFSET (@PageNumber - 1) * @RowsOfPage ROWS FETCH NEXT @RowsOfPage ROWS ONLY", con);
@@ -75,8 +76,14 @@ namespace BankingSoftware
                 else  
                     Left.Visible = true;
 
-                if (dt.Rows.Count % 7 != 0)
+                if ((dt.Rows.Count % 7 >= 1 && dt.Rows.Count % 7 <= 6) || 
+                    (type == "Income" && positiveRows() == 1) || 
+                    (type == "Cost" && negativeRows() == 1)) 
+                {
+
                     Right.Visible = false;
+                }
+                    
                 else
                     Right.Visible = true;
 
@@ -100,6 +107,42 @@ namespace BankingSoftware
             }
 
             SqlCommand cmdRows = new SqlCommand("SELECT COUNT(1) FROM balance_tbl WHERE user_id='" + Session["user_id"] + "';", con);
+            int UserExist = (int)cmdRows.ExecuteScalar();
+
+            int pageCount = UserExist / 7;
+
+            if (UserExist % 7 != 0)
+                pageCount++;
+            return pageCount;
+        }
+
+        int positiveRows()
+        {
+            SqlConnection con = new SqlConnection(strcon);
+            if (con.State == ConnectionState.Closed)
+            {
+                con.Open();
+            }
+
+            SqlCommand cmdRows = new SqlCommand("SELECT COUNT(1) FROM balance_tbl WHERE transaction_amount > 0 AND user_id='" + Session["user_id"] + "';", con);
+            int UserExist = (int)cmdRows.ExecuteScalar();
+
+            int pageCount = UserExist / 7;
+
+            if (UserExist % 7 != 0)
+                pageCount++;
+            return pageCount;
+        }
+
+        int negativeRows()
+        {
+            SqlConnection con = new SqlConnection(strcon);
+            if (con.State == ConnectionState.Closed)
+            {
+                con.Open();
+            }
+
+            SqlCommand cmdRows = new SqlCommand("SELECT COUNT(1) FROM balance_tbl WHERE transaction_amount < 0 AND user_id='" + Session["user_id"] + "';", con);
             int UserExist = (int)cmdRows.ExecuteScalar();
 
             int pageCount = UserExist / 7;
@@ -178,7 +221,7 @@ namespace BankingSoftware
 
                 int monthsadded = 1 + alreadyWithdraw();
                 decimal fee = decimal.Parse(Loan[4]) / 12 + decimal.Parse(Loan[4]) / 240;
-                while (DateTime.Parse(Loan[3]).AddMonths(monthsadded) <= dateTime && monthsadded < 12)
+                while (DateTime.Parse(Loan[3]).AddMonths(monthsadded) <= dateTime && monthsadded <= 12)
                 {
                     decimal new_balance = decimal.Parse(Session["balance"].ToString()) - fee;
                     Session["balance"] = new_balance;
