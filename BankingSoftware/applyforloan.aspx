@@ -49,7 +49,7 @@
             </div>
             <div class="row mt-2">
                 <div class="col-md-12 mx-auto">
-                    <label>Net Monthly Income</label>
+                    <label>Loan Type</label>
                     <div class="form-group" >
                         <asp:DropDownList ID="Loans" CssClass="form-control" runat="server">
                             <asp:ListItem Text="I'm looking for" Value="imlookingfor" />

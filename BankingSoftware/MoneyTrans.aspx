@@ -49,5 +49,6 @@
                 <asp:Button  ID="Submit" CssClass="btn btn-info col-12 mt-5 btn-lg" runat="server" Text="Submit" OnClick="Transfer_Click"/>
             </div>
         </div>
+        <a href="viewBalance.aspx"><< Back to Main</a><br><br>
     </div>
 </asp:Content>
