@@ -114,7 +114,7 @@ namespace BankingSoftware
             int num = int.Parse(Pagenumber.Text.ToString());
             int pageCount = rows();
             num++;
-            if (num >= pageCount)
+            if (num <= pageCount)
             {
                 Pagenumber.Text = num.ToString();                
                 getPageRows(num);                
