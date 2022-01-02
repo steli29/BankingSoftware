@@ -24,7 +24,7 @@ namespace BankingSoftware
                     con.Open();
                 }
                 SqlCommand cmd = new SqlCommand("SELECT * FROM  users_tbl  WHERE user_id='" + Session["user_id"] + "';", con);
-                SqlDataAdapter da = new SqlDataAdapter(cmd);;
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataSet ds = new DataSet();
                 da = new SqlDataAdapter(cmd);
                 da.Fill(ds);
@@ -56,6 +56,34 @@ namespace BankingSoftware
                 cmd = new SqlCommand("DECLARE @PageNumber AS INT DECLARE @RowsOfPage AS INT SET @PageNumber = " + page + " SET @RowsOfPage = 7 SELECT * FROM balance_tbl WHERE user_id ='" + Session["user_id"] + "' AND transaction_amount > 0 ORDER BY transaction_id OFFSET (@PageNumber - 1) * @RowsOfPage ROWS FETCH NEXT @RowsOfPage ROWS ONLY", con);
             else if(type == "Cost")
                 cmd = new SqlCommand("DECLARE @PageNumber AS INT DECLARE @RowsOfPage AS INT SET @PageNumber = " + page + " SET @RowsOfPage = 7 SELECT * FROM balance_tbl WHERE user_id ='" + Session["user_id"] + "' AND transaction_amount < 0 ORDER BY transaction_id OFFSET (@PageNumber - 1) * @RowsOfPage ROWS FETCH NEXT @RowsOfPage ROWS ONLY", con);
+            else if (type == "Loan") { 
+                cmd = new SqlCommand("DECLARE @PageNumber AS INT DECLARE @RowsOfPage AS INT SET @PageNumber = " + page + " SET @RowsOfPage = 7 SELECT * FROM balance_tbl WHERE user_id ='" + Session["user_id"] + "' AND type = 'Loan' ORDER BY transaction_id OFFSET (@PageNumber - 1) * @RowsOfPage ROWS FETCH NEXT @RowsOfPage ROWS ONLY", con);
+            }
+            else if (type == "Date")
+            {
+                try { 
+                DateTime startDate = DateTime.Parse(StartDate.Value);
+                DateTime endDate = DateTime.Parse(EndDate.Value);
+               
+                if (startDate.Date > endDate.Date)
+                {
+                    Response.Write("<script>alert('Invalid dates selected. Start date is after end date!');</script>");
+                    return;
+                }
+                    cmd = new SqlCommand("DECLARE @PageNumber AS INT DECLARE @RowsOfPage AS INT SET @PageNumber = "
+                    + page + " SET @RowsOfPage = 7 SELECT * FROM balance_tbl WHERE user_id ='" + Session["user_id"]
+                    + "' AND date>=@startdate AND date<=@enddate ORDER BY transaction_id OFFSET (@PageNumber - 1) * @RowsOfPage ROWS FETCH NEXT @RowsOfPage ROWS ONLY", con);
+
+                    cmd.Parameters.AddWithValue("@startdate", startDate);
+                    cmd.Parameters.AddWithValue("@enddate", endDate);
+                }
+                catch (System.FormatException)
+                {
+                    Response.Write("<script>alert('Please choose dates!');</script>");
+                    return;
+                }
+
+            }
             else
                 cmd = new SqlCommand("DECLARE @PageNumber AS INT DECLARE @RowsOfPage AS INT SET @PageNumber = " + page + " SET @RowsOfPage = 7 SELECT * FROM balance_tbl WHERE user_id ='" + Session["user_id"] + "' ORDER BY transaction_id OFFSET (@PageNumber - 1) * @RowsOfPage ROWS FETCH NEXT @RowsOfPage ROWS ONLY", con);
             
@@ -69,6 +97,7 @@ namespace BankingSoftware
                 All.Visible = true;
                 Income.Visible = true;
                 Costs.Visible = true;
+                Loan.Visible = true;
 
                 if (page == 1) 
                     Left.Visible = false;
@@ -93,8 +122,11 @@ namespace BankingSoftware
             {
                 Pagenumber.Text = (page-1).ToString();
                 Right.Visible = false;
+                Transaction.DataSource = de;
+                Transaction.DataBind();
             }
             con.Close();
+            Session["Type"] = "All";
         }
 
         int rows()
@@ -197,6 +229,20 @@ namespace BankingSoftware
         public void Costs_Click(object sender, EventArgs e)
         {
             Session["Type"] = "Cost";
+            Pagenumber.Text = "1";
+            getPageRows(1);
+        }
+
+        public void Loan_Click(object sender, EventArgs e)
+        {
+            Session["Type"] = "Loan";
+            Pagenumber.Text = "1";
+            getPageRows(1);
+        }
+
+        public void DateFilter_Click(object sender, EventArgs e)
+        {
+            Session["Type"] = "Date";
             Pagenumber.Text = "1";
             getPageRows(1);
         }

@@ -20,13 +20,27 @@
     <hr style="clear:both"/>    
     <br />    <br /><br />
     
-    <h1 class="display-5 font-monospace" style="text-align:center">Your last transactions</h1>
+    <h1 class="display-5 font-monospace mb-4" style="text-align:center">Your last transactions</h1>
  
     <div class="table-div">
-        <div class="mb-1 buttons-pos">
+        <div class="mb-4">
+            <div class="form-group" style="float:left; ">
+                <label>Start date:</label>
+                <input ID="StartDate" runat="server" type="date">
+            </div>
+            <div class="form-group" style="float:left; margin-left: 20px;">
+                <label>End date:</label>
+                <input ID="EndDate" runat="server" type="date">
+            </div>
+            <div class="form-group" style="margin-left: 20px;">
+                <asp:Button  style="margin-left: 20px;" ID="Submit" CssClass="btn btn-info col-1" runat="server" Text="Submit" OnCLick="DateFilter_Click"/>
+            </div>
+        </div>
+        <div class="mb-4">
     <asp:Button ID="All" Visible="false" class="btn btn-outline-primary" runat="server" Text="All" OnCLick="All_Click"/>
     <asp:Button ID="Income" Visible="false" class="btn btn-outline-success" runat="server" Text="Income" OnCLick="Income_Click"/>
     <asp:Button ID="Costs" Visible="false" class="btn btn-outline-danger" runat="server" Text="Costs" OnCLick="Costs_Click"/>
+    <asp:Button ID="Loan" Visible="false" class="btn btn-outline-warning" runat="server" Text="Loans" OnCLick="Loan_Click"/>
     </div>
 
     <table class="table table-info">
