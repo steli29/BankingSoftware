@@ -21,9 +21,8 @@
     <br />    <br /><br />
     
     <h1 class="display-5 font-monospace mb-4" style="text-align:center">Your last transactions</h1>
- 
     <div class="table-div">
-        <div class="mb-4">
+        <div class="mb-4" style="margin-top:50px;">
             <div class="form-group" style="float:left; ">
                 <label>Start date:</label>
                 <input ID="StartDate" runat="server" type="date">
@@ -36,6 +35,21 @@
                 <asp:Button  style="margin-left: 20px;" ID="Submit" CssClass="btn btn-info col-1" runat="server" Text="Submit" OnCLick="DateFilter_Click"/>
             </div>
         </div>
+        <hr>
+         <div class="mb-4">
+            <div class="form-group" style="float:left; ">
+                <label>From amount:</label>
+                <input type="number" step="0.50" ID="MinAmount" runat="server">
+            </div>
+            <div class="form-group" style="float:left; margin-left: 20px;">
+                <label>To amount:</label>
+                <input type="number" step="0.50" ID="MaxAmount" runat="server">
+            </div>
+            <div class="form-group" style="margin-left: 20px;">
+                <asp:Button  style="margin-left: 20px;" ID="SubmitAmount" CssClass="btn btn-info col-1" runat="server" Text="Submit" OnCLick="AmountFilter_Click"/>
+            </div>
+        </div>
+        <hr>
         <div class="mb-4">
     <asp:Button ID="All" Visible="false" class="btn btn-outline-primary" runat="server" Text="All" OnCLick="All_Click"/>
     <asp:Button ID="Income" Visible="false" class="btn btn-outline-success" runat="server" Text="Income" OnCLick="Income_Click"/>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Web.UI;
 
 namespace BankingSoftware
@@ -80,6 +81,31 @@ namespace BankingSoftware
                 catch (System.FormatException)
                 {
                     Response.Write("<script>alert('Please choose dates!');</script>");
+                    return;
+                }
+
+            }
+            else if (type == "Amount")
+            {
+                try
+                {
+                    decimal min = decimal.Parse(MinAmount.Value);
+                    decimal max = decimal.Parse(MaxAmount.Value);
+                    if (min > max)
+                    {
+                        Response.Write("<script>alert('Invalid dates selected. Minimum amount is larger than maximum amount!');</script>");
+                        return;
+                    }
+                    cmd = new SqlCommand("DECLARE @PageNumber AS INT DECLARE @RowsOfPage AS INT SET @PageNumber = "
+                    + page + " SET @RowsOfPage = 7 SELECT * FROM balance_tbl WHERE user_id ='" + Session["user_id"]
+                    + "' AND transaction_amount>=@minAmount AND transaction_amount<=@maxAmount ORDER BY transaction_id OFFSET (@PageNumber - 1) * @RowsOfPage ROWS FETCH NEXT @RowsOfPage ROWS ONLY", con);
+
+                    cmd.Parameters.AddWithValue("@minAmount", min);
+                    cmd.Parameters.AddWithValue("@maxAmount", max);
+                }
+                catch (System.FormatException)
+                {
+                    Response.Write("<script>alert('Please choose amounts!');</script>");
                     return;
                 }
 
@@ -243,6 +269,13 @@ namespace BankingSoftware
         public void DateFilter_Click(object sender, EventArgs e)
         {
             Session["Type"] = "Date";
+            Pagenumber.Text = "1";
+            getPageRows(1);
+        }
+
+        public void AmountFilter_Click(object sender, EventArgs e)
+        {
+            Session["Type"] = "Amount";
             Pagenumber.Text = "1";
             getPageRows(1);
         }
